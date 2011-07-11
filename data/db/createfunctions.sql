@@ -2500,7 +2500,7 @@ BEGIN
         SET
         (with_parts,
          part_ref, part, part_status,
-         building, "floor", room, "row", shelf,
+         institution_ref,building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, sub_container,
          part_count_min, part_count_max,
@@ -2509,7 +2509,7 @@ BEGIN
         =
         (true,
          NEW.id, NEW.specimen_part, NEW.specimen_status,
-         NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
+         NEW.institution_ref,NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
          NEW.container_type, NEW.container_storage, NEW.container,
          NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
          NEW.specimen_part_count_min, NEW.specimen_part_count_max,
@@ -2552,7 +2552,7 @@ BEGIN
          individual_social_status, individual_rock_form,
          individual_count_min, individual_count_max,
          with_parts,
-         part_ref, part, part_status,
+         part_ref, part, part_status, institution_ref,
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, sub_container,
@@ -2593,7 +2593,7 @@ BEGIN
          individual_social_status, individual_rock_form,
          individual_count_min, individual_count_max,
          true,
-         NEW.id, NEW.specimen_part, NEW.specimen_status,
+         NEW.id, NEW.specimen_part, NEW.specimen_status, NEW.institution_ref,
          NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
          NEW.container_type, NEW.container_storage, NEW.container,
          NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
@@ -2608,7 +2608,7 @@ BEGIN
       /*Update corresponding parts data in darwin_flat*/
       UPDATE darwin_flat
       SET
-      (part_ref, part, part_status,
+      (part_ref, part, part_status, institution_ref,
        building, "floor", room, "row", shelf,
        container_type, container_storage, "container",
        sub_container_type, sub_container_storage, sub_container,
@@ -2616,7 +2616,7 @@ BEGIN
        specimen_status, "complete", surnumerary
       )
       =
-      (NEW.id, NEW.specimen_part, NEW.specimen_status,
+      (NEW.id, NEW.specimen_part, NEW.specimen_status, NEW.institution_ref,
        NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
        NEW.container_type, NEW.container_storage, NEW.container,
        NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
@@ -2914,7 +2914,7 @@ BEGIN
         UPDATE darwin_flat
         SET
         (with_parts,
-         part_ref, part, part_status,
+         part_ref, part, part_status, institution_ref,
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, "sub_container",
@@ -2923,7 +2923,7 @@ BEGIN
         )
         =
         (DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT, DEFAULT,
@@ -3274,7 +3274,7 @@ BEGIN
                                                                      AND pref_key = 'search_cols_part' 
                                                                    LIMIT 1
                                                                   ), E'\\|') as fields_list
-                                       where fields_list not in ('building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type', 'container_storage', 'sub_container', 'sub_container_type', 'sub_container_storage')
+                                       where fields_list not in ('institution_ref', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type', 'container_storage', 'sub_container', 'sub_container_type', 'sub_container_storage')
                                       ),'|'
                                 ) as fields_available
          ) subq
@@ -3285,7 +3285,7 @@ BEGIN
       SET visible_fields_in_result = subq.fields_available
       FROM (select array_to_string(array(select fields_list
                                          from regexp_split_to_table(saved_search_row.visible_fields_in_result, E'\\|') as fields_list 
-                                         where fields_list not in ('building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type', 'container_storage', 'sub_container', 'sub_container_type', 'sub_container_storage')
+                                         where fields_list not in ('institution_ref','building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type', 'container_storage', 'sub_container', 'sub_container_type', 'sub_container_storage')
                                         ),'|'
                                   ) as fields_available
           ) subq

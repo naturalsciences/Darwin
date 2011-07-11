@@ -1,6 +1,6 @@
 <table>
   <tr>
-  <th class="top_aligned"><?php echo $form['institution_ref']->renderLabel();?></th>
+  <th class=""><?php echo $form['institution_ref']->renderLabel();?></th>
   <td><?php echo $form['institution_ref']->render() ?></td>
   </tr>
   <tr>
