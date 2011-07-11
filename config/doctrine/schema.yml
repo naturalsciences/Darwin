@@ -1026,6 +1026,7 @@ SpecimenSearch:
         part_ref: {type: integer }
         part: {type: string }
         part_status: {type: string }
+        institution_ref: {type: integer}
         building: {type: string }
         floor: {type: string }
         room: {type: string }
@@ -1275,6 +1276,7 @@ IndividualSearch:
         part_ref: {type: integer }
         part: {type: string }
         part_status: {type: string }
+        institution_ref: {type: integer}
         building: {type: string }
         floor: {type: string }
         room: {type: string }
@@ -1525,6 +1527,7 @@ PartSearch:
         part_ref: {type: integer}
         part: {type: string }
         part_status: {type: string }
+        institution_ref: {type: integer}
         building: {type: string }
         floor: {type: string }
         room: {type: string }
@@ -1775,6 +1778,7 @@ IgsSearch:
         part_ref: {type: integer }
         part: {type: string }
         part_status: {type: string }
+        institution_ref: {type: integer}
         building: {type: string }
         floor: {type: string }
         room: {type: string }

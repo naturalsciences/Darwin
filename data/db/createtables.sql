@@ -1343,7 +1343,7 @@ create table codes
         full_code_order_by varchar not null,
         code_date timestamp not null default '0001-01-01 00:00:00',
         code_date_mask integer not null default 0,
-	code_num integer default 0,
+        code_num integer default 0,
         constraint pk_codes primary key (id),
         constraint unq_codes unique (referenced_relation, record_id, full_code_order_by,code_category)
        )
@@ -1431,6 +1431,7 @@ create table specimen_parts
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
         constraint fk_specimen_parts_parent_ref foreign key (parent_ref) references specimen_parts(id) on delete cascade,
+        constraint fk_specimen_parts_institutions foreign key (institution_ref) references people(id) ON DELETE no action,
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
         constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
@@ -1741,6 +1742,7 @@ create table darwin_flat
     part_ref integer,
     part varchar,
     part_status varchar,
+    institution_ref integer,
     building varchar,
     floor varchar,
     room varchar,
@@ -1882,6 +1884,7 @@ comment on column darwin_flat.with_parts is 'Flag telling if they are parts for 
 comment on column darwin_flat.part_ref is 'Reference of part - coming from specimen_parts table (id field) - set to null if no references';
 comment on column darwin_flat.part is 'Part name: wing, tail, toes,...';
 comment on column darwin_flat.part_status is 'Part status: intact, lost, stolen,...';
+comment on column darwin_flat.institution_ref is 'Institution (people) where the current part is stored';
 comment on column darwin_flat.building is 'Building where the current part is stored';
 comment on column darwin_flat.floor is 'Floor where the current part is stored';
 comment on column darwin_flat.room is 'Room where the current part is stored';
