@@ -343,7 +343,7 @@ class StagingForm extends BaseStagingForm
     else unset($this['igs_ref']) ;   
     if($this->getValue('spec_ref') != 0) $status['duplicate'] = 'done' ;        
     else unset($this['spec_ref']) ;
-    if($this->getValue('institution_ref') != 0) $status['institution'] = 'done' ;        
+    if($this->getValue('institution_ref') >= 0) $status['institution'] = 'done' ;        
     else unset($this['institution_ref']) ;
     if($value = $this->getValue('WrongCollectors')) 
     {
