@@ -210,7 +210,7 @@ class ImportDnaXml implements IImportModels
   public function processWithTaxonNode($xml_node,$object)
   {
     $taxon_parent = new Hstore();
-    $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species") ;
+    $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species","sub_family") ;
     foreach ($xml_node->childNodes as $taxon_node) 
     {        
       // text node doesn't interest us
