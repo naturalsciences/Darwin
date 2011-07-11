@@ -61,3 +61,12 @@
     </p>
   <?php endif ; ?>
 </div>
+
+<script>
+$(document).ready(function () {
+  $(".ref_clear").click( function()
+  {
+    $(this).parent().find('input').val(0);
+  });
+});
+</script>

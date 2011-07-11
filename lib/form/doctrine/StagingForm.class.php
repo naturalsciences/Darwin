@@ -45,7 +45,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['taxon_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['taxon_ref'] = new sfValidatorInteger(array('required'=>false));
     }      
     /* Chronostratigraphy Reference */
     if(in_array('chrono_ref',$this->options['fields']))
@@ -62,7 +62,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['chrono_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));      
+      $this->validatorSchema['chrono_ref'] = new sfValidatorInteger(array('required'=>false));      
     }
 
     /* Lithostratigraphy Reference */
@@ -80,7 +80,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['litho_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['litho_ref'] = new sfValidatorInteger(array('required'=>false));
     }
 
     /* Lithology Reference */
@@ -98,7 +98,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['lithology_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['lithology_ref'] = new sfValidatorInteger(array('required'=>false));
     }
 
     /* Mineralogy Reference */
@@ -116,7 +116,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['mineral_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['mineral_ref'] = new sfValidatorInteger(array('required'=>false));
     }
 
     /* IG number Reference */
@@ -145,7 +145,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['expedition_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['expedition_ref'] = new sfValidatorInteger(array('required'=>false));
     }
     
     /* Gtu Reference */
@@ -161,7 +161,7 @@ class StagingForm extends BaseStagingForm
        ),
         array('class'=>'inline')
       );   
-      $this->validatorSchema['gtu_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['gtu_ref'] = new sfValidatorInteger(array('required'=>false));
     }
     
     /* Lithology Reference */
@@ -179,7 +179,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['institution_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['institution_ref'] = new sfValidatorInteger(array('required'=>false));
     }      
     /* Host Reference *//*
     if(in_array('host_ref',$this->options['fields']) )  
@@ -329,22 +329,22 @@ class StagingForm extends BaseStagingForm
   public function save($con = null, $forms = null) 
   {
     $status = $this->getObject()->getFields(true) ;
-    if($this->getValue('taxon_ref') != 0) $status['taxon'] = 'done' ;
+    if($this->getValue('taxon_ref') >= 0) $status['taxon'] = 'done' ; 
     else unset($this['taxon_ref']) ;
-    if($this->getValue('chrono_ref') != 0) $status['chrono'] = 'done' ;    
+    if($this->getValue('chrono_ref') >= 0) $status['chrono'] = 'done' ;    
     else unset($this['chrono_ref']) ;    
-    if($this->getValue('mineral_ref') != 0) $status['mineral'] = 'done' ;    
+    if($this->getValue('mineral_ref') >= 0) $status['mineral'] = 'done' ;    
     else unset($this['mineral_ref']) ;    
-    if($this->getValue('litho_ref') != 0) $status['litho'] = 'done' ;    
+    if($this->getValue('litho_ref') >= 0) $status['litho'] = 'done' ;    
     else unset($this['litho_ref']) ;    
-    if($this->getValue('lithology_ref') != 0) $status['lithology'] = 'done' ;    
+    if($this->getValue('lithology_ref') >= 0) $status['lithology'] = 'done' ;    
     else unset($this['lithology_ref']) ;    
-    if($this->getValue('igs_ref') != 0) $status['igs'] = 'done' ;        
+    if($this->getValue('igs_ref') >= 0) $status['igs'] = 'done' ;        
     else unset($this['igs_ref']) ;   
     if($this->getValue('spec_ref') != 0) $status['duplicate'] = 'done' ;        
     else unset($this['spec_ref']) ;
     if($this->getValue('institution_ref') != 0) $status['institution'] = 'done' ;        
-    else unset($this['institution_ref']) ;       
+    else unset($this['institution_ref']) ;
     if($value = $this->getValue('WrongCollectors')) 
     {
       unset($this['collectors']) ; 
