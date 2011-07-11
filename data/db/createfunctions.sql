@@ -4012,7 +4012,7 @@ IDENTIFIERS
   FOR ident_line in select * from identifications where referenced_relation ='staging' AND  record_id = line.id
   LOOP
     cnt := -1;
-    FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ',') as item
+    FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ',') as item where item != ''
     LOOP
       cnt := cnt + 1;
 
@@ -4106,7 +4106,7 @@ BEGIN
 	    COALESCE(line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,true),  line.ig_ref
 	  );
 	  UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
-          UPDATE identifications set determination_status = null where referenced_relation ='specimens' and record_id = rec_id;
+    UPDATE identifications set determination_status = null where referenced_relation ='specimens' and record_id = rec_id;
 	ELSE
 	  rec_id = line.spec_ref;
 	END IF;
