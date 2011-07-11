@@ -329,21 +329,22 @@ class StagingForm extends BaseStagingForm
   public function save($con = null, $forms = null) 
   {
     $status = $this->getObject()->getFields(true) ;
-    if($this->getValue('taxon_ref') >= 0) $status['taxon'] = 'done' ; 
+    echo ("valeur du taxon : ".$this->getValue('taxon_ref')) ;
+    if(is_numeric($this->getValue('taxon_ref'))) $status['taxon'] = 'done' ; 
     else unset($this['taxon_ref']) ;
-    if($this->getValue('chrono_ref') >= 0) $status['chrono'] = 'done' ;    
+    if(is_numeric($this->getValue('chrono_ref'))) $status['chrono'] = 'done' ;    
     else unset($this['chrono_ref']) ;    
-    if($this->getValue('mineral_ref') >= 0) $status['mineral'] = 'done' ;    
+    if(is_numeric($this->getValue('mineral_ref'))) $status['mineral'] = 'done' ;    
     else unset($this['mineral_ref']) ;    
-    if($this->getValue('litho_ref') >= 0) $status['litho'] = 'done' ;    
+    if(is_numeric($this->getValue('litho_ref'))) $status['litho'] = 'done' ;    
     else unset($this['litho_ref']) ;    
-    if($this->getValue('lithology_ref') >= 0) $status['lithology'] = 'done' ;    
+    if(is_numeric($this->getValue('lithology_ref'))) $status['lithology'] = 'done' ;    
     else unset($this['lithology_ref']) ;    
-    if($this->getValue('igs_ref') >= 0) $status['igs'] = 'done' ;        
+    if(is_numeric($this->getValue('igs_ref'))) $status['igs'] = 'done' ;        
     else unset($this['igs_ref']) ;   
     if($this->getValue('spec_ref') != 0) $status['duplicate'] = 'done' ;        
     else unset($this['spec_ref']) ;
-    if($this->getValue('institution_ref') >= 0) $status['institution'] = 'done' ;        
+    if(is_numeric($this->getValue('institution_ref'))) $status['institution'] = 'done' ;        
     else unset($this['institution_ref']) ;
     if($value = $this->getValue('WrongCollectors')) 
     {
@@ -369,7 +370,7 @@ class StagingForm extends BaseStagingForm
           $status['donators'] = 'not_found' ;
           unset($this->embeddedForms['WrongDonators'][$name]);
         }
-      }
+      }      
     }
     if($value = $this->getValue('WrongIdentifiers')) 
     {

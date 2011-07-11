@@ -13,7 +13,7 @@ class PeopleInErrorForm extends BaseCataloguePeopleForm
        'method' => 'getFormatedName',
        'default_name' => $name,
        'box_title' => $this->getI18N()->__('Choose People'),
-       'nullable' => true,
+       'nullable' => false,
        'button_class'=>'',
      ),
       array('class'=>'inline',
