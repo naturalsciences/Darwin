@@ -165,8 +165,8 @@
   </xs:element>
   <xs:group name="classification_commons">
     <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="level" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="status" type="taxon_statuses" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
   </xs:group>
@@ -402,12 +402,12 @@
     <xs:complexType>
       <xs:sequence>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:group ref="classification_commons" minOccurs="1" maxOccurs="1"/>
           <xs:element name="extinct" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
           <xs:element name="phylum" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="order" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="family" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="sub_family" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="tribe" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="genus" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="sub_genus" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -415,6 +415,7 @@
           <xs:element name="species" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="sub_species" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="variety" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:group ref="classification_commons" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
