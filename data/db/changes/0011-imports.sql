@@ -9,6 +9,11 @@ where exists ( select 1  from users_languages where preferred_language = true an
 
 -- update specimen_parts set institution_ref = 47859
 
+alter table people add column name_formated_indexed text not null default '';
+update people set name_formated_indexed = fulltoindex(coalesce(given_name,'') || coalesce(family_name,''));
+
+alter table darwin_flat add column  institution_ref integer;
+
 create sequence imports_id_seq;
 
 create table imports

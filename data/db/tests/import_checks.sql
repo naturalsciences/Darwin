@@ -3,6 +3,7 @@
 SELECT plan(61);
 
 select diag('Test of staging check without levels');
+update people set name_formated_indexed = fulltoindex(coalesce(given_name,'') || coalesce(family_name,''));
 
 insert into imports (id, user_ref, format, filename, collection_ref) VALUES (1,1,'brol','brol.xml',2);
 insert into staging (id,import_ref, "level",taxon_name) VALUES (12,1,'specimens','');

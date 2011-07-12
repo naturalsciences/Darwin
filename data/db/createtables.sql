@@ -53,6 +53,7 @@ create table people
         activity_date_from date not null default '01/01/0001',
         activity_date_to_mask integer not null default 0,
         activity_date_to date not null default '31/12/2038',
+        name_formated_indexed varchar not null default '',
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical,gender, formated_name_unique, birth_date, birth_date_mask, end_date, end_date_mask)
        )
@@ -64,6 +65,7 @@ comment on column people.sub_type is 'Used for moral persons: precise nature - p
 comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column people.formated_name_indexed is 'Indexed form of formated_name field';
+comment on column people.name_formated_indexed is 'The indexed form of given_name and family_name';
 comment on column people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column people.family_name is 'Family name for physical persons and Organisation name for moral persons';
 comment on column people.given_name is 'User/person''s given name - usually first name';
