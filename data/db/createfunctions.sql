@@ -3895,13 +3895,14 @@ AS $$
 DECLARE
   ref_record integer :=0;
   result_nbr integer;
-
+  searched_name text;
 BEGIN
     result_nbr := 0;
+    searched_name := fulltoindex(fullname)|| '%'  ;
     FOR ref_record IN SELECT id from people p 
       WHERE 
-        formated_name_indexed like fulltoindex(fullname) || '%'  
-        OR  name_formated_indexed like fulltoindex(fullname) || '%' LIMIT 2
+        formated_name_indexed like searched_name 
+        OR  name_formated_indexed like searched_name LIMIT 2
     LOOP
       result_nbr := result_nbr +1;
     END LOOP;
