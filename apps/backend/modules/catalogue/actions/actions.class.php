@@ -243,4 +243,15 @@ class catalogueActions extends DarwinActions
     return $this->renderPartial('nameValue',array('form' => $form['newKeywords'][$number]));
   }
 
+  public function executeGetCurrent(sfWebRequest $request)
+  {
+    $this->forward404Unless( $request->hasParameter('id') && $request->hasParameter('table'));
+
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($request->getParameter('table'), $request->getParameter('id'),'current_name');
+    if(! count($relations))
+      return $this->renderText('{}');
+    else {
+      return $this->renderText(json_encode(array('name'=>$relations[0]['ref_item']->getName(), 'id'=>$relations[0]['record_id_2'])));
+    }
+  }
 }
