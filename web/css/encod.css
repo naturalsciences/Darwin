@@ -164,3 +164,16 @@ table.extended_info hr
   height: 1px;
   border: 0;
 }
+
+#taxon_orig
+{
+  margin-bottom:1em;
+}
+#taxon_orig span
+{
+    display: block;
+    font-style: italic;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    text-decoration: underline;
+}
