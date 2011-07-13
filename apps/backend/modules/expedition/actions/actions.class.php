@@ -52,9 +52,9 @@ class expeditionActions extends DarwinActions
   public function executeNew(sfWebRequest $request)
   {
     $expedition = new Expeditions() ;
-    if($request->hasParameter('name')) $expedition->setName($request->getParameter('name')) ;    
     $duplic = $request->getParameter('duplicate_id','0') ;
     $expedition = $this->getRecordIfDuplicate($duplic, $expedition);
+    if($request->hasParameter('expedition')) $expedition->fromArray($request->getParameter('expedition'));            
     // Initialization of a new encoding expedition form
     $this->form = new ExpeditionsForm($expedition);
     if ($duplic)

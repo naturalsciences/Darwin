@@ -137,7 +137,6 @@
           event.preventDefault();
           $(this).closest('tr').find('input').val('');
         });
-
     });
 
     function updateLatLong()

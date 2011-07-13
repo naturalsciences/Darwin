@@ -73,17 +73,8 @@ class peopleActions extends DarwinActions
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $people = new People() ;
-    if($request->hasParameter('name'))
-    {
-      $info_name = explode(' ',$request->getParameter('name')) ;    
-      if(count($info_name) > 1) 
-      {
-        $people->setGivenName($info_name[0]) ;      
-        $people->setFamilyName($info_name[1]) ;
-      }
-      else $people->setFamilyName($info_name[0]) ;
-    }
     $people = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $people);
+    if($request->hasParameter('people')) $people->fromArray($request->getParameter('people'));        
     $this->form = new PeopleForm($people);
   }
 

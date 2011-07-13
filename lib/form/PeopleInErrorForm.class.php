@@ -19,7 +19,7 @@ class PeopleInErrorForm extends BaseCataloguePeopleForm
       array('class'=>'inline',
            )
     );
-    $this->validatorSchema['people_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+    $this->validatorSchema['people_ref'] = new sfValidatorInteger(array('required'=>false));
     $this->widgetSchema['people_type'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['referenced_relation'] = new sfValidatorString();

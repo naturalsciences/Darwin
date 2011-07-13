@@ -70,9 +70,9 @@ class lithostratigraphyActions extends DarwinActions
   public function executeNew(sfWebRequest $request)
   {
     $litho = new Lithostratigraphy() ;
-    if($request->hasParameter('name')) $litho->setName($request->getParameter('name')) ;
     $duplic = $request->getParameter('duplicate_id','0');
     $litho = $this->getRecordIfDuplicate($duplic, $litho);
+    if($request->hasParameter('lithostratigraphy')) $litho->fromArray($request->getParameter('lithostratigraphy'));        
     $this->form = new LithostratigraphyForm($litho);
   }
 

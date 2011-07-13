@@ -355,7 +355,7 @@ class StagingForm extends BaseStagingForm
         if (!isset($value[$name]['people_ref'])) 
         {
           unset($this->embeddedForms['WrongCollectors'][$name]);
-          $status['collectors'] = 'not_found' ;          
+          $status['collectors'] = 'people' ;          
         }
       }
     }
@@ -367,7 +367,7 @@ class StagingForm extends BaseStagingForm
       {
         if (!isset($value[$name]['people_ref']))
         {
-          $status['donators'] = 'not_found' ;
+          $status['donators'] = 'people' ;
           unset($this->embeddedForms['WrongDonators'][$name]);
         }
       }      
@@ -380,7 +380,7 @@ class StagingForm extends BaseStagingForm
       {
         if (!isset($value[$name]['people_ref']))
         {
-          $status['identifiers'] = 'not_found' ;
+          $status['identifiers'] = 'people' ;
           unset($this->embeddedForms['WrongIdentifiers'][$name]);
         }
       }

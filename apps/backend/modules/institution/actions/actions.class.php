@@ -76,8 +76,8 @@ class institutionActions extends DarwinActions
   public function executeNew(sfWebRequest $request)
   {  
     $instit = new Institutions() ;
-    if($request->hasParameter('name'))  $instit->setFamilyName($request->getParameter('name')) ;  
     $instit = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $instit);
+    if($request->hasParameter('institution')) $instit->fromArray($request->getParameter('institution'));            
     $this->form = new InstitutionsForm($instit);
   }
 
