@@ -1,0 +1,138 @@
+/* Override some defaults */
+html, body {
+  background-color: #eee;
+}
+.navbar {
+  margin-bottom: 0;
+}
+.container > footer {
+  margin-top: 20px;
+}
+.container > footer p {
+  text-align: center; /* center align it with the container */
+}
+
+/* The white background content wrapper */
+.content {
+  background-color: #fff;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+          box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+/* Page header tweaks */
+.page-header {
+  background-color: #f5f5f5;
+  border: 1px solid #CCCCCC;
+  padding: 20px 20px 10px;
+  margin: -20px -20px 20px;
+}
+
+.topbar .btn {
+  border: 0;
+}
+
+
+/* tag_box ======================================================== */
+
+.tag_box {
+	list-style:none;
+	margin:0;
+	padding:5px 0 ;
+	overflow:hidden;
+}
+.tag_box li {
+	line-height:28px;
+}
+.tag_box.inline li {
+	float:left;
+}
+.tag_box a {
+	padding: 3px 6px;
+	margin: 2px;
+	background: #eee;
+	color:#005F6B;
+	border-radius: 3px;
+	text-decoration:none;
+}
+.tag_box a span{
+	vertical-align:super;
+	font-size:0.8em;
+}
+.tag_box a.active {
+	background:#57A957;
+	border:1px solid #4C964D;
+	color:#FFF;
+}
+	
+/*********************** END OF TBS **********************/
+
+footer { text-align:center; }
+
+.header {
+  background-color: #404040;
+  border-bottom: 3px solid #0088CC;
+  margin-bottom: 10px;
+}
+
+.header h1{
+  line-height: 80px;
+  vertical-align:middle;
+  font-size: 50px;
+/*   font-family: serif; */
+}
+.header a[href] { 
+  text-decoration:none;
+  color:white;
+}
+
+.header img{
+  margin-top:10px;
+  position:absolute;
+  
+}
+
+.aricle-header {
+  border-bottom: 1px solid #414141;
+}
+.aricle-header .date span {
+  display:block;
+}
+.aricle-header .date {
+  color: #D2DB81;/*#0088CC;*/
+  border: 1px solid #404040;
+  border-radius: 7px;
+  background-color:#404040;
+    list-style: none outside none;
+    margin-left: -2.5em;
+    padding: 4px;
+    position: absolute;
+    text-align: center;
+}
+.aricle-header h2 {
+  display:inline;
+}
+
+/*** DISCOVER ***/
+label h3{
+  color: #0088CC;
+}
+#discoveries .span3{
+/*   border: 1px solid #404040; */
+  margin-bottom: 2em;
+/*   background-color: #333333; */
+  color:white;
+  border-radius: 7px;
+  padding: 5px;
+}
+
+#home_sum { margin-bottom: 2em; }
+
+h2 {
+  color: #0088CC;
+}

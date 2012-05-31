@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% unless page.title %} DaRWIN {% else %} {{page.title}} {% endunless %}</title>
+    {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+    <meta name="author" content="{{ site.author.name }}">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    
+    <a href="http://github.com/naturalsciences/Darwin">
+      <img alt="Fork me on GitHub" src="{{ ASSET_PATH }}/../../dw/github.png" style="position: absolute; top: 0px; right: 0; border: 0;">
+    </a>
+
+    <div class="container-fluid header">
+      <div class="row-fluid">
+        <div class="span3">
+        </div><!--/span-->
+
+        <div class="span1">
+          <img src="{{ ASSET_PATH }}/../../dw/logo_small.png" width="100" />
+        </div><!--/span-->
+        <div class="span8">
+          <h1 class="brand"><a  href="{{ HOME_PATH }}">{{ site.title }}</a></h1>
+        </div><!--/span-->
+      </div><!--/row-->
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="sidebar-nav"> <!-- well class?-->
+      
+              <ul class="nav nav-pills nav-stacked nav-tabs">
+                <li class="{% unless page.menu %}active{% endunless %}"><a title="DaRWIN Home" href="{{ site.base }}/"><i class="icon-home"></i> Home</a></li>
+                <li class="{% if page.menu == 'discover' %}active{% endif %}"><a href="{{ site.base }}/discover.html"><i class="icon-eye-open"></i> Discover</a></li>
+                <li class="{% if page.menu == 'screenshots' %}active{% endif %}"><a href="{{ site.base }}/screenshots.html"><i class="icon-picture"></i> Screenshots</a></li>
+                <li class="{% if page.menu == 'news' %}active{% endif %}"><a href="{{ site.base }}/news.html"><i class="icon-globe"></i> News</a></li>
+                <li class="{% if page.menu == 'doc' %}active{% endif %}"><a href="{{ site.base }}/doc.html"><i class="icon-book"></i> Documentation</a></li>
+                <li class="{% if page.menu == 'download' %}active{% endif %}"><a href="{{ site.base }}/download.html"><i class="icon-circle-arrow-down"></i> Download</a></li>
+                <li class="{% if page.menu == 'contacts' %}active{% endif %}"><a href="{{ site.base }}/contacts.html"><i class="icon-comment"></i> Contact</a></li>
+              </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+        <div class="span9">
+          <div class="hero-unit">
+            {{ content }}
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+
+      <footer>
+        <p>{{ site.author.name }} </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    {% include JB/analytics %}
+  </body>
+</html>
