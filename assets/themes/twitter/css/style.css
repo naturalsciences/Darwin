@@ -104,15 +104,15 @@ footer { text-align:center; }
   display:block;
 }
 .aricle-header .date {
-  color: #D2DB81;/*#0088CC;*/
-  border: 1px solid #404040;
+  /*color: #D2DB81;*//*#0088CC;*/
+  border: 1px solid #CCCCCC;
   border-radius: 7px;
-  background-color:#404040;
-    list-style: none outside none;
-    margin-left: -2.5em;
-    padding: 4px;
-    position: absolute;
-    text-align: center;
+  background-color:#CCCCCC;
+  list-style: none outside none;
+  margin-left: -3em;
+  padding: 4px;
+  position: absolute;
+  text-align: center;
 }
 .aricle-header h2 {
   display:inline;
