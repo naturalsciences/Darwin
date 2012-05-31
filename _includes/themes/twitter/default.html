@@ -43,13 +43,13 @@
           <div class="sidebar-nav"> <!-- well class?-->
       
               <ul class="nav nav-pills nav-stacked nav-tabs">
-                <li class="{% unless page.menu %}active{% endunless %}"><a title="DaRWIN Home" href="{{ site.base }}/"><i class="icon-home"></i> Home</a></li>
-                <li class="{% if page.menu == 'discover' %}active{% endif %}"><a href="{{ site.base }}/discover.html"><i class="icon-eye-open"></i> Discover</a></li>
-                <li class="{% if page.menu == 'screenshots' %}active{% endif %}"><a href="{{ site.base }}/screenshots.html"><i class="icon-picture"></i> Screenshots</a></li>
-                <li class="{% if page.menu == 'news' %}active{% endif %}"><a href="{{ site.base }}/news.html"><i class="icon-globe"></i> News</a></li>
-                <li class="{% if page.menu == 'doc' %}active{% endif %}"><a href="{{ site.base }}/doc.html"><i class="icon-book"></i> Documentation</a></li>
-                <li class="{% if page.menu == 'download' %}active{% endif %}"><a href="{{ site.base }}/download.html"><i class="icon-circle-arrow-down"></i> Download</a></li>
-                <li class="{% if page.menu == 'contacts' %}active{% endif %}"><a href="{{ site.base }}/contacts.html"><i class="icon-comment"></i> Contact</a></li>
+                <li class="{% unless page.menu %}active{% endunless %}"><a title="DaRWIN Home" href="{{ BASE_PATH }}/"><i class="icon-home"></i> Home</a></li>
+                <li class="{% if page.menu == 'discover' %}active{% endif %}"><a href="{{ BASE_PATH }}/discover.html"><i class="icon-eye-open"></i> Discover</a></li>
+                <li class="{% if page.menu == 'screenshots' %}active{% endif %}"><a href="{{ BASE_PATH }}/screenshots.html"><i class="icon-picture"></i> Screenshots</a></li>
+                <li class="{% if page.menu == 'news' %}active{% endif %}"><a href="{{ BASE_PATH }}/news.html"><i class="icon-globe"></i> News</a></li>
+                <li class="{% if page.menu == 'doc' %}active{% endif %}"><a href="{{ BASE_PATH }}/doc.html"><i class="icon-book"></i> Documentation</a></li>
+                <li class="{% if page.menu == 'download' %}active{% endif %}"><a href="{{ BASE_PATH }}/download.html"><i class="icon-circle-arrow-down"></i> Download</a></li>
+                <li class="{% if page.menu == 'contacts' %}active{% endif %}"><a href="{{ BASE_PATH }}/contacts.html"><i class="icon-comment"></i> Contact</a></li>
               </ul>
           </div><!--/.well -->
         </div><!--/span-->
