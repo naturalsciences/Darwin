@@ -1,5 +1,6 @@
 ---
 layout: page
+menu: home
 ---
 {% include JB/setup %}
 

@@ -3,8 +3,7 @@ layout: page
 title: News
 menu: news
 ---
-
-{% for post in site.posts %}
+{% for post in site.categories.news %}
 <article class="post">
   <header class="aricle-header">
     <p class="date">
