@@ -136,3 +136,10 @@ label h3{
 h2 {
   color: #0088CC;
 }
+
+pre{
+  background-color: black;
+}
+code.bash {
+  color:white;
+}
