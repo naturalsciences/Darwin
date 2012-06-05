@@ -21,7 +21,9 @@ PostgreSQL 8.4
 Begin by installing the postgresql server and make (used for
 installation)
 
-`# aptitude install  make git postgresql-8.4 postgresql-contrib-8.4 postgresql-8.4-hstore-new postgresql-8.4-postgis`
+{% highlight bash %}
+# aptitude install  make git postgresql-8.4 postgresql-contrib-8.4 postgresql-8.4-hstore-new postgresql-8.4-postgis
+{% endhighlight %}
 
 PostgreSQL 9.1
 --------------
@@ -33,7 +35,10 @@ possible, on Debian Wheezy, to install postgis by packages. The
 installation of postgis has to be done “by hand” and be compiled.
 So that’s why, in this case, a huge package list is needed:
 
-`# aptitude install  make git postgresql-9.1 postgresql-contrib-9.1 postgresql-9.1-postgis`
+{% highlight bash %}
+# aptitude install  make git postgresql-9.1 postgresql-contrib-9.1 postgresql-9.1-postgis
+{% endhighlight %}
+
 
 
 Configuration of Pg
