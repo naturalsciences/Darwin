@@ -3,6 +3,7 @@ layout: page
 title: Contacts
 menu: contacts
 ---
+{% include JB/setup %}
 
 ## E-mail
 

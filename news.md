@@ -3,6 +3,8 @@ layout: page
 title: News
 menu: news
 ---
+
+{% include JB/setup %}
 {% for post in site.categories.news %}
 <article class="post">
   <header class="aricle-header">

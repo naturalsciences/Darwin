@@ -4,6 +4,7 @@ title: Discover
 tagline: the power of DaRWIN
 menu: discover
 ---
+{% include JB/setup %}
 
 <div id="discoveries">
   <div class="row">

@@ -4,6 +4,7 @@ title: Install DaRWIN Database on Debian
 menu: doc
 group: doc-tech-en
 ---
+{% include JB/setup %}
 
 Install the Db on Debian (Squeeze or Wheezy)
 ============================================

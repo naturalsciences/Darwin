@@ -3,6 +3,7 @@ layout: page
 title: Download
 menu: download
 ---
+{% include JB/setup %}
 
 ## Stable version (Git)
 

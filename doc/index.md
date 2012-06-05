@@ -3,6 +3,7 @@ layout: page
 title: Documentation
 menu: doc
 ---
+{% include JB/setup %}
 
 ## Technical documentation
 

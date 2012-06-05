@@ -4,6 +4,7 @@ title: Install DaRWIN Interface on Debian
 menu: doc
 group: doc-tech-en
 ---
+{% include JB/setup %}
 
 Install the web interface
 =========================
