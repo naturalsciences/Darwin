@@ -99,16 +99,18 @@ postgres user account, so let’s login:
 
 We STRONGLY recommend you to put a `~/.pgpass` file in your home
 directory to avoid typing your password over and over again (especially
-for testing).
+for testing). [Read the Documentation about .pgpass](http://www.postgresql.org/docs/8.4/interactive/libpq-pgpass.html)
 
-Add a `.pgpass` and make it look (please adapt it for your needs), and chmod it correctly
+Add a `.pgpass` and make it look (please adapt it for your needs) like this :
 
 {% highlight sh %}
  127.0.0.1:*:*:darwin2:MyP4ssw0rd!
 {% endhighlight %}
 
+ Don't forget to chmod it correctly
+
 {% highlight bash %}
-    $ chmod u=rw ~/.pgpass
+ $ chmod u=rw ~/.pgpass
 {% endhighlight %}
 
 The easiest way to install the db is to call the command :
@@ -116,7 +118,7 @@ The easiest way to install the db is to call the command :
 With Postgresql  v__8.4__ (default) do
 
 {% highlight bash %}
-# make install-all
+$ make install-all
 {% endhighlight %}
 
 With other versions of postgres issue the previous command with the
@@ -126,13 +128,13 @@ For instance for a postgres version __8.3__ you would issue the following
 command:
 
 {% highlight bash %}
-# make install-all PG_VER=8.3
+$ make install-all PG_VER=8.3
 {% endhighlight %}
 
 … and for a postgres version 9.1 you would issue the following command:
 
 {% highlight bash %}
-# make install-all PG_VER=9.1
+$ make install-all PG_VER=9.1
 {% endhighlight %}
 
 This command will create a new db with a new tablespace and install all
@@ -141,6 +143,4 @@ of darwin in it.
 You can also customize the installation by passing some variable to make
 (see make help)
 
-  [http://postgis.refractions.net/download]: http://postgis.refractions.net/download
-  [\~/.pgpass]: http://www.postgresql.org/docs/8.3/interactive/libpq-pgpass.html
 
