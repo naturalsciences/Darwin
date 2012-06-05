@@ -8,7 +8,7 @@ menu: download
 
 The recommended way to install and maintain darwin is through the "Git" version constrol system.
 
-<a href="{{ site.base }}/doc.html" class="btn btn-success btn-large">Learn More</a>
+<a href="{{ site.base }}/doc/" class="btn btn-success btn-large">Learn More</a>
 
 ***************
 
