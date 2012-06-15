@@ -47,7 +47,7 @@ menu: home
     <div class="span3">
       <label>
         <h3><a href="{{ BASE_PATH }}/news.html">News</a></h3>
-        <p>Get informations about what&apos;s new in DaRWIN</p>
+        <p>What&apos;s new and what is comming in DaRWIN&apos;s world</p>
       </label>
     </div><!-- span -->
 
