@@ -7,7 +7,7 @@ menu: home
 <div id="home">
   <div class="row" id="home_sum">
     <div class="span7">
-      <p>DaRWIN also stands for Data Research Warehouse Information Network.
+      <p>DaRWIN stands for Data Research Warehouse Information Network.
       It's an open source web base tool to manage your Natural Sciences collections.
       DaRWIN is customisable and has several right management possiblities.
       </p>
