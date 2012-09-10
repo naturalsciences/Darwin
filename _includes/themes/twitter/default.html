@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% unless page.title %} DaRWIN {% else %} {{page.title}} {% endunless %}</title>
+    <title>{% unless page.title %}DaRWIN{% else %}DaRWIN - {{page.title}}{% endunless %}</title>
     <meta name="description" content="{{ site.description }}{% if page.description %} - {{ page.description }}{% endif %}">
     <meta name="author" content="{{ site.author.name }}">
 
@@ -20,8 +20,7 @@
   </head>
 
   <body>
-    
-    <a href="http://github.com/naturalsciences/Darwin">
+    <a href="{{ site.darwin_repo_url }}">
       <img alt="Fork me on GitHub" src="{{ ASSET_PATH }}/../../dw/github.png" style="position: absolute; top: 0px; right: 0; border: 0;">
     </a>
 
@@ -34,7 +33,7 @@
           <img src="{{ ASSET_PATH }}/../../dw/logo_small.png" width="100" />
         </div><!--/span-->
         <div class="span8">
-          <h1 class="brand"><a  href="{{ HOME_PATH }}">{{ site.title }}</a></h1>
+          <h1 class="brand"><a href="{{ HOME_PATH }}">{{ site.title }}</a></h1>
         </div><!--/span-->
       </div><!--/row-->
     </div>
