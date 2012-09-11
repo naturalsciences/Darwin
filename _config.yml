@@ -11,8 +11,8 @@ markdown: kramdown
 # so be sure to set them if your theme uses them.
 #
 title : DaRWIN
-tagline: An Open Source Natural Sciences Collection manager
-description: DaRWIN is an Open Source Natural Sciences Collection manager developed initially by the Royal belgian Insitute for natural Sciences
+tagline: An open source natural Sciences collection management tool
+description: DaRWIN is an open source natural Sciences collection management tool developed initially by the Royal belgian Institute for natural Sciences
 author :
   name : DaRWIN Team
   email : darwin-ict@naturalsciences.be

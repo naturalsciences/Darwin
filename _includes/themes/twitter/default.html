@@ -1,48 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>{% unless page.title %}DaRWIN{% else %}DaRWIN - {{page.title}}{% endunless %}</title>
-    <meta name="description" content="{{ site.description }}{% if page.description %} - {{ page.description }}{% endif %}">
-    <meta name="author" content="{{ site.author.name }}">
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le styles -->
-    <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
-    <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ ASSET_PATH }}/css/syntax.css"/>
-    <link rel="shortcut icon" href="{{ ASSET_PATH }}/../../dw/favicon.ico"/>
-  </head>
-
-  <body>
-    <a href="{{ site.darwin_repo_url }}">
-      <img alt="Fork me on GitHub" src="{{ ASSET_PATH }}/../../dw/github.png" style="position: absolute; top: 0px; right: 0; border: 0;">
-    </a>
-
-    <div class="container-fluid header">
-      <div class="row-fluid">
-        <div class="span3">
-        </div><!--/span-->
-
-        <div class="span1">
-          <img src="{{ ASSET_PATH }}/../../dw/logo_small.png" width="100" />
-        </div><!--/span-->
-        <div class="span8">
-          <h1 class="brand"><a href="{{ HOME_PATH }}">{{ site.title }}</a></h1>
-        </div><!--/span-->
-      </div><!--/row-->
-    </div>
-
+{% include header.html %}
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="sidebar-nav"> <!-- well class?-->
-      
               <ul class="nav nav-pills nav-stacked nav-tabs">
                 <li class="{% if page.menu == 'home' %}active{% endif %}"><a title="DaRWIN Home" href="{{ BASE_PATH }}/"><i class="icon-home"></i> Home</a></li>
                 <li class="{% if page.menu == 'discover' %}active{% endif %}"><a href="{{ BASE_PATH }}/discover.html"><i class="icon-eye-open"></i> Discover</a></li>
@@ -61,14 +21,5 @@
           </div>
         </div><!--/span-->
       </div><!--/row-->
-
-
-      <footer>
-        <p>{{ site.author.name }}</p>
-      </footer>
-
     </div> <!-- /container -->
-
-    {% include JB/analytics %}
-  </body>
-</html>
+{% include footer.html %}
