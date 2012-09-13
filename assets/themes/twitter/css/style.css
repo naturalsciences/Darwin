@@ -144,14 +144,6 @@ code.bash {
   color:white;
 }
 
-a i.twitter-bird {
-  background-image: url('../bootstrap/img/suppl-icons.png');
-  background-repeat: no-repeat;
-  background-position: 0px 20px;
-  width:30px;
-  height:30px;
-}
-
 footer ul {
   list-style:none;
 }
