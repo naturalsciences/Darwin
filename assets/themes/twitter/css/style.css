@@ -140,6 +140,9 @@ h2 {
 pre{
   background-color: black;
 }
+pre code {
+  color:white;
+}
 code.bash {
   color:white;
 }
