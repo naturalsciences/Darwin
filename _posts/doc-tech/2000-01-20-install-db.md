@@ -23,7 +23,7 @@ Begin by installing the postgresql server and make (used for
 installation)
 
 {% highlight bash %}
-# aptitude install  make git postgresql-8.4 postgresql-contrib-8.4 postgresql-8.4-hstore-new postgresql-8.4-postgis
+# sudo aptitude install  make git postgresql-8.4 postgresql-contrib-8.4 postgresql-8.4-hstore-new postgresql-8.4-postgis
 {% endhighlight %}
 
 PostgreSQL 9.1
@@ -37,7 +37,7 @@ installation of postgis has to be done “by hand” and be compiled.
 So that’s why, in this case, a huge package list is needed:
 
 {% highlight bash %}
-# aptitude install  make git postgresql-9.1 postgresql-contrib-9.1 postgresql-9.1-postgis
+# sudo aptitude install  make git postgresql-9.1 postgresql-contrib-9.1 postgresql-9.1-postgis
 {% endhighlight %}
 
 
@@ -142,5 +142,3 @@ of darwin in it.
 
 You can also customize the installation by passing some variable to make
 (see make help)
-
-
