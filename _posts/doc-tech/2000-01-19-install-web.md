@@ -15,7 +15,7 @@ system (ubuntu,…)
 Begin with the dependency :
 
 {% highlight bash %}
-# aptitude install apache2 php5 php5-cli php5-pgsql php5-xdebug php-apc
+# aptitude install apache2 php5 php5-cli php5-pgsql php5-xdebug php-apc php5-imagick
 {% endhighlight %}
 
 And don’t forget to [set up your database](01-install-db.html).
@@ -25,7 +25,7 @@ check you have writing rights on `/var/www/`
 and there, checkout the code :
 
 {% highlight bash %}
-$ git clone http://projects.naturalsciences.be/code/darwin/web.git
+ git clone http://projects.naturalsciences.be/code/darwin/web.git
 {% endhighlight %}
 
 Go into /var/www/web and checkout the following code:
@@ -156,7 +156,7 @@ You'll need incron to react to a new file import and a cron to check rows
 Install the software :
 
 {% highlight bash %}
-  aptitude install incron
+  sudo aptitude install incron
 {% endhighlight %}
 
 Edit `/etc/incron.allow` file and add www-data
