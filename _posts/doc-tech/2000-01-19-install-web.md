@@ -15,7 +15,7 @@ system (ubuntu,…)
 Begin with the dependency :
 
 {% highlight bash %}
-# aptitude install apache2 php5 php5-cli php5-pgsql php5-xdebug php-apc php5-imagick
+# aptitude install apache2 php5 php5-cli php5-pgsql php5-xdebug php-apc php5-imagick php5-ldap
 {% endhighlight %}
 
 And don’t forget to [set up your database](01-install-db.html).
@@ -51,6 +51,7 @@ and settings :
 cp config/darwin.yml.init config/darwin.yml
 {% endhighlight %}
 
+(and the config/app.yml if you wish)
 
 and edit the `databases.yml` set your host / username / password .
 
