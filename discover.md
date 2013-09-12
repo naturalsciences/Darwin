@@ -41,14 +41,14 @@ menu: discover
     <div class="span3">
       <label class="well">
         <h3>Loans</h3>
-        <p>DaRWIN give you the oportuny to track and manage your loans of specimens in one place.</p>
+        <p>DaRWIN give you the opportunity to track and manage your loans of specimens in one place.</p>
       </label>
     </div><!-- span -->
 
     <div class="span3">
       <label class="well">
         <h3>Complex Specimens</h3>
-        <p>DaRWIN support multiple way of manage your specimens, reference relations bewteen parts or group of them.</p>
+        <p>DaRWIN support multiple way of manage your specimens, reference relations between parts or group of them.</p>
       </label>
     </div><!-- span -->
   </div><!-- row -->
