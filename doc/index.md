@@ -15,6 +15,6 @@ or the architectural structuration of DaRWIN.
 ## User documentation
 
 Read more about how darwin works and how to get things done.
-Learn how to register, instert specimens or manage your loans
+Learn how to register, insert specimens or manage your loans
 
 * [Online Html](user/)
