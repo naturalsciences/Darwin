@@ -35,7 +35,7 @@ menu: home
     <div class="span3">
       <label>
         <h3><a href="{{ BASE_PATH }}/doc/">Documentation</a></h3>
-        <p>Find everything you need about installation, maintanance or usage of DaRWIN.</p>
+        <p>Find everything you need about installation, maintenance or usage of DaRWIN.</p>
       </label>
     </div><!-- span -->
   </div>
