@@ -25,18 +25,10 @@ check you have writing rights on `/var/www/`
 and there, checkout the code :
 
 {% highlight bash %}
- git clone http://projects.naturalsciences.be/code/darwin/web.git
+ git clone --recursive http://projects.naturalsciences.be/code/darwin/web.git
 {% endhighlight %}
 
-Go into /var/www/web and checkout the following code:
-
-{% highlight bash %}
- git submodule init
- git submodule update
-{% endhighlight %}
-
-
-(now, remove writing rights on the `/var/www` directory if you want)
+Then Go into /var/www/web folder (you can now remove writing rights on the `/var/www` directory if you want)
 
 and configure the database connection :
 
