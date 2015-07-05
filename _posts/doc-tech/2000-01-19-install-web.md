@@ -25,7 +25,7 @@ check you have writing rights on `/var/www/`
 and there, checkout the code :
 
 {% highlight bash %}
- git clone --recursive http://projects.naturalsciences.be/code/darwin/web.git
+ git clone --recursive https://github.com/naturalsciences/Darwin.git
 {% endhighlight %}
 
 Then Go into /var/www/web folder (you can now remove writing rights on the `/var/www` directory if you want)

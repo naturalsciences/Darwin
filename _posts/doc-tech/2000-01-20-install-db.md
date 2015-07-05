@@ -41,7 +41,7 @@ custom_variable_classes = 'darwin'
 datestyle = 'iso, dmy'
 {% endhighlight %}
 
-you might want to display everything in your logs wy adding  : log_min_duration_statement = 0
+you might want to display everything in your logs by adding  : log_min_duration_statement = 0
 
 in `/etc/postgresql/9.1/main/pg_hba.conf`
 
@@ -60,7 +60,7 @@ Darwin Db install scripts are located in the main darwin repository (where the w
 If you already have a copy of the code, go in it, if not, just do :
 
 {% highlight bash %}
- $ git clone http://projects.naturalsciences.be/code/darwin/web.git darwin
+ $ git clone https://github.com/naturalsciences/Darwin.git darwin
 {% endhighlight %}
 
 then go to the `darwin/data/db/` directory
@@ -71,10 +71,9 @@ Installation of Darwin in Pg
 First of all contributive packages are used in Darwin such as pg_trgm
 and pgcrypto
 
-We provide a make script for the installation of darwin
+We provide a script for the installation of darwin
 
-use the command make or make help to view more details about the make
-file.
+use the command install.sh help to view more details about the script.
 
 For some commands you must be connected to the database with the
 postgres user account, so make sure you have access to the postgres user through sudo
@@ -107,5 +106,5 @@ $ ./install.sh install-all
 This command will create a new db with a new tablespace and install all
 of darwin in it.
 
-You can also customize the installation by passing some variable to make
-(see make help)
+You can also customize the installation by passing some variable to the script
+(see ./install.sh help)
