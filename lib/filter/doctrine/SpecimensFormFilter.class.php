@@ -619,6 +619,11 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       'comment_notion_concerned' => 'Notion concerned',
     ));
 	
+	//ftheeten 2015 01 08
+	$this->widgetSchema['code_boolean'] = new sfWidgetFormChoice(array('choices' => array('AND' => 'AND', 'OR' => 'OR')));
+  	////ftheeten 2015 01 08
+	$this->validatorSchema['code_boolean'] = new sfValidatorPass();
+	
 	//ftheeten 2015 09 09
 	$this->widgetSchema['code_exact_match'] = new sfWidgetFormInputCheckbox(array('default' => FALSE));
   	////ftheeten 2015 09 09
@@ -928,8 +933,19 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
           $sql_params[] = $code['code_part'];
           $has_query = true;
         }
+		
         if($has_query)
-          $query->addWhere("EXISTS(select 1 from codes where  referenced_relation='specimens' and record_id = s.id AND $sql)", $sql_params);
+		{
+		//ftheeten 2015 01 08
+			if($this->code_boolean=='OR')
+			{
+				$query->orWhere("EXISTS(select 1 from codes where  referenced_relation='specimens' and record_id = s.id AND $sql)", $sql_params);
+			}
+			else
+			{
+				$query->andWhere("EXISTS(select 1 from codes where  referenced_relation='specimens' and record_id = s.id AND $sql)", $sql_params);
+			}
+		}
     }
 
     return $query ;
@@ -1122,7 +1138,15 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       $taintedValues['Codes'] = array();
     }
 
-	
+	//ftheeten 2015 01 08
+	$this->code_boolean='AND';
+	 if(isset($taintedValues['Codes'])&& is_array($taintedValues['Codes']) && isset($taintedValues['code_boolean'])) 
+	 {
+		if($taintedValues['code_boolean']=='OR')
+		{
+			$this->code_boolean='OR';
+		}
+	}
 	
      //ftheeten 2015 09 09
 	$this->code_exact_match=FALSE;
