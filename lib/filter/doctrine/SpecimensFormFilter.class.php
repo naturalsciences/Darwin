@@ -618,6 +618,12 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       'property_units' => 'Unit',
       'comment_notion_concerned' => 'Notion concerned',
     ));
+	
+	//ftheeten 2015 09 09
+	$this->widgetSchema['code_exact_match'] = new sfWidgetFormInputCheckbox(array('default' => FALSE));
+  	////ftheeten 2015 09 09
+	$this->validatorSchema['code_exact_match'] = new sfValidatorPass();
+	
 
     // For compat only with old saved search
     // FIXME: might be removed with a migration
@@ -909,7 +915,16 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
         }
         if($code['code_part']  != '') {
           if($has_query) $sql .= ' AND ';
-          $sql .= " full_code_indexed ilike '%' || fulltoindex(?) || '%' ";
+         //ftheeten 20150909 (if on exact match
+		  if($this->code_exact_match==FALSE)
+		  {
+			//ftheeten 20140922
+			$sql .= " full_code_indexed ilike (SELECT '%'||fulltoindex||'%' FROM fulltoindex(?))";
+		  }
+		  else if($this->code_exact_match==TRUE)
+		  {
+			$sql .= " full_code_indexed ilike (SELECT fulltoindex FROM fulltoindex(?))";
+		  }
           $sql_params[] = $code['code_part'];
           $has_query = true;
         }
@@ -1107,6 +1122,18 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       $taintedValues['Codes'] = array();
     }
 
+	
+	
+     //ftheeten 2015 09 09
+	$this->code_exact_match=FALSE;
+	 if(isset($taintedValues['Codes'])&& is_array($taintedValues['Codes']) && isset($taintedValues['code_exact_match'])) 
+	 {
+		if($taintedValues['code_exact_match']==TRUE)
+		{
+			$this->code_exact_match=TRUE;
+		}
+	}
+	
     if(isset($taintedValues['Tags'])&& is_array($taintedValues['Tags'])) {
       foreach($taintedValues['Tags'] as $key=>$newVal) {
         if (!isset($this['Tags'][$key])) {

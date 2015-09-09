@@ -1,5 +1,11 @@
 <table id="code_search" class="full_size">
   <thead>
+	<tr>
+	      <td colspan="6">
+		     <div style="font-weight:bold; text-align:center; vertical-align:middle; padding-bottom:10px;">Exact match:<?php echo $form['code_exact_match'];?></div>
+			</td>
+	
+	</tr>
     <tr>
       <th><?php echo __('Category');?></th>
       <th colspan="2"></th>
