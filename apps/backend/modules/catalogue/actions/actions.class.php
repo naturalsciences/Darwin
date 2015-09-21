@@ -370,4 +370,42 @@ class catalogueActions extends DarwinActions
                                 )
     );
   }
+  
+  //ftheeten 2015 06 08 autocomplete for codes (with optional filter on collections)
+  public function executeCodesAutocomplete(sfWebRequest $request)
+  {
+	$result=Array();
+	if($request->getParameter('term'))
+	{
+		 $conn = Doctrine_Manager::connection();
+		 if($request->getParameter('collections'))
+		 {
+			$sql = "SELECT DISTINCT COALESCE(code_prefix,'')||COALESCE(code_prefix_separator,'')||COALESCE(code,'')||COALESCE(code_suffix_separator,'')||COALESCE(code_suffix,'') as value, full_code_indexed as value_indexed FROM codes WHERE code_category='main' AND
+			full_code_indexed LIKE CONCAT('%', (SELECT * FROM fulltoindex(:term)), '%') AND 
+			record_id IN (SELECT id FROM specimens WHERE collection_ref IN (".$request->getParameter('collections').") )
+			ORDER by full_code_indexed LIMIT 30;";
+		 }
+		 else
+		 {
+			$sql = "SELECT DISTINCT COALESCE(code_prefix,'')||COALESCE(code_prefix_separator,'')||COALESCE(code,'')||COALESCE(code_suffix_separator,'')||COALESCE(code_suffix,'') as value, full_code_indexed as value_indexed FROM codes WHERE code_category='main' AND
+			referenced_relation='specimens' AND 
+			full_code_indexed LIKE CONCAT('%', (SELECT * FROM fulltoindex(:term)), '%')  ORDER by full_code_indexed LIMIT 30;";
+		}
+		$q = $conn->prepare($sql);
+		$q->execute(array(':term' => $request->getParameter('term')));
+		$codes = $q->fetchAll();
+		$results = array();
+		$i=0;
+		foreach($codes as $code)
+		{
+			$results[$i]['value'] = $code[0];
+			$results[$i]['value_indexed'] = $code[1];
+			$i++;
+		}
+	}
+	
+		$this->getResponse()->setContentType('application/json');
+		return  $this->renderText(json_encode($results));
+  }
+
 }

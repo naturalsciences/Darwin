@@ -72,6 +72,34 @@ $(document).ready(function () {
       $(this).find('.prev').click();
   });
   checkBetween();
+  
+   //ftheeten 2015 06 08
+  //autocomplete for codes number
+   $('.col_check').change(
+		function(i)
+		{
+				autocomplete_rmca_array=$('.col_check:checked').map(function(){
+				return $(this).val();
+				}).get();
+			
+		}
+  );
+	 var url="<?php echo(url_for('catalogue/codesAutocomplete?'));?>";
+
+	  $('.autocomplete_for_code').autocomplete({
+		source: function (request, response) {
+			$.getJSON(url, {
+						term : request.term,
+						collections: autocomplete_rmca_array.join()
+					} , function (data) {
+				response($.map(data, function (value, key) {
+					return value;
+				}));
+			});
+		},
+		minLength: 2,
+		delay: 100
+	});
 
 });
 </script>

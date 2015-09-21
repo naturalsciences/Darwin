@@ -19,6 +19,8 @@ class CodeLineForm extends BaseForm
       'choices' => array('specimens'=>'specimens','specimen_parts'=>'specimen_parts'),
     ));
     $this->widgetSchema['code_part'] = new sfWidgetFormInput(array(),array('style'=> 'width:97%;'));
+	//ftheeten 2015 06 04 (autocompelte and mask)
+    $this->widgetSchema['code_part']->setAttributes(array('class'=>'class_rmca_input_mask autocomplete_for_code'));
     $this->widgetSchema['code_from'] = new sfWidgetFormInput(array(),array('class'=> 'lsmall_size'));
     $this->widgetSchema['code_to'] = new sfWidgetFormInput(array(),array('class'=> 'lsmall_size'));
 
