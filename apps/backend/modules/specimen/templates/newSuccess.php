@@ -71,7 +71,19 @@ $(document).ready(function ()
     </ul>
   </div>
 
-  <?php echo form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition no_border','enctype'=>'multipart/form-data'));?>
+  <?php 
+		//RMCA 2015 10 19 (new identification, to redirect to a new acction: split_created
+		$formDisplay= form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition no_border','enctype'=>'multipart/form-data'));
+		if(isset($newIdentification)&&isset($original_id))
+		{
+			if($newIdentification===TRUE&&isset($original_id))
+			{
+				$formDisplay=form_tag('specimen/'.($form->getObject()->isNew() ? 'create'.'?split_created='.$original_id : 'update?id='.$form->getObject()->getId()), array('class'=>'edition no_border','enctype'=>'multipart/form-data'));
+
+			}
+		}
+		print($formDisplay);
+	?>
     <div>
       <?php if($form->hasGlobalErrors()):?>
         <ul class="spec_error_list">
@@ -94,6 +106,8 @@ $(document).ready(function ()
       <?php if (!$form->getObject()->isNew()): ?>
         <?php echo link_to(__('New specimen'), 'specimen/new') ?>
         &nbsp;<a href="<?php echo url_for('specimen/new?duplicate_id='.$form->getObject()->getId());?>" class="duplicate_link"><?php echo __('Duplicate specimen');?></a>
+		<!--RMCA 2015 10 19 new identifications-->
+	    &nbsp;<a href="<?php echo url_for('specimen/new?split_id='.$form->getObject()->getId());?>" class="duplicate_link"><?php echo __('New identification');?></a>
         &nbsp;<?php echo link_to(__('Delete'), 'specimen/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
       <?php endif?>
       &nbsp;<a href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Cancel');?></a>
@@ -125,6 +139,15 @@ $(document).ready(function () {
         event.preventDefault();
     }
   }) ;
+  
+   //ftheeten 2015 10 14
+  //to by pass unicity check has it is a duplicate
+  <?php if(isset($newIdentification)): ?>
+	<?php if($newIdentification===TRUE): ?>
+		$(".class_unicity_check").attr('checked', false);
+		$(".class_unicity_check_container").hide();
+	<?php endif; ?>
+ <?php endif; ?>
 });
 </script>
 </div></div>

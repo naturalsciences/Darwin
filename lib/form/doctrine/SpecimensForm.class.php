@@ -824,7 +824,8 @@ class SpecimensForm extends BaseSpecimensForm
     $this->attachEmbedRecord('Donators', new PeopleAssociationsForm(DarwinTable::newObjectFromArray('CataloguePeople',$options)), $num);
   }
 
-  public function addCodes($num, $values, $order_by=0)
+  //ftheeten 2015 10 12 add DirectLink to handle duplication of codes (when new identification of specimen, values are already in the form and in the $values variable)
+  public function addCodes($num, $values, $order_by=0, $directLink=FALSE)
   {
     $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
     if(isset($values['collection_ref']))
@@ -832,23 +833,35 @@ class SpecimensForm extends BaseSpecimensForm
     else
       $col = $this->getObject()->getCollectionRef();
 
-    if($col != '') {
-      $collections = Doctrine::getTable('Collections');
-      $collection = $collections->findOneById($col);
-      if($collection)
-      {
-        $options['code_prefix'] = $collection->getCodePrefix();
-        $options['code_prefix_separator'] = $collection->getCodePrefixSeparator();
-        if($collection->getCodeAutoIncrement() && (empty($values['code']) || $values['code'] == ''))
-          $options['code'] = $collections->getAndUpdateLastCode($collection->getId());
-        elseif (!empty($values['code']) && $values['code'] != '')
-          $options['code'] = $values['code'];
-        $options['code_suffix'] = $collection->getCodeSuffix();
-        $options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
-      }
-    }
-    $this->attachEmbedRecord('Codes', new CodesForm(DarwinTable::newObjectFromArray('Codes',$options)), $num);
+	 //added ftheeten 2015 12 10 (to copy an already existing code 	
+	if($directLink===TRUE)
+	{
+		    $options['code_prefix'] =  $values['code_prefix'];
+			$options['code_prefix_separator'] = $values['code_prefix_separator'];
+			$options['code'] = $values['code'] ;
+			$options['code_suffix'] = $values['code_suffix'];
+			$options['code_suffix_separator'] = $values['code_suffix_separator'];
+	}
+	else
+	{
+		if($col != '') {
+			
+		
+		  $collection = Doctrine::getTable('Collections')->find($col);
+		  if($collection)
+		  {
+			$options['code_prefix'] = $collection->getCodePrefix();
+			$options['code_prefix_separator'] = $collection->getCodePrefixSeparator();
+			if($collection->getCodeAutoIncrement())
+			  $options['code'] = $collection->getCodeLastValue() + 1 ;
+			$options['code_suffix'] = $collection->getCodeSuffix();
+			$options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
+		  }
+		}
+	}
+    $this->attachEmbedRecord('Codes', new CodesForm(DarwinTable::newObjectFromArray('Codes',$options), $options), $num);
   }
+
 
   public function addExtLinks($num, $obj=null)
   {

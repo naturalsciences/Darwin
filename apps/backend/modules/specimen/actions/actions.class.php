@@ -209,6 +209,16 @@ class specimenActions extends DarwinActions
         }
       }
     }
+	//ftheeten 2015 10 12
+	//split specimen (duplicate with the same id and automated relationship
+	elseif ($request->hasParameter('split_id')) // then it's a "new identification" 
+    {
+		//ftheeten hack to pass the unicity check setting to the "code" embedded subform
+		//via a session variable 2015 10 14
+		//print("SET2");
+		//sfContext::getInstance()->getUser()->setAttribute("bypass_unicity_check", "on");
+		$this->handleNewIdentification($request);
+    }
     else
     {
       $spec = new Specimens();
@@ -219,6 +229,16 @@ class specimenActions extends DarwinActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    //ftheeten 2015 10 19
+	//to handle failure of a validation when the specimen is a new identification
+	//and allow the callback to still redirect to "newIdentificationSuccess.php"
+	//(see also "newSuccess.php)
+	if($request->hasParameter("split_created"))
+	{
+		$this->newIdentification=TRUE;
+		$this->original_id= $request->getParameter('split_created','0') ;
+	}
+	//
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     $this->forward404Unless($request->isMethod('post'),'You must submit your data with Post Method');
     $spec = new Specimens();
@@ -232,6 +252,11 @@ class specimenActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();
+	
+	//ftheeten 2015 10 13 (handle properties -new label- of new identiciations
+	$this->handlePropertiesOfNewIdentification($request);
+	//end addition property
+	
     $this->form = $this->getSpecimenForm($request, true);
     if(!$this->getUser()->isA(Users::ADMIN))
     {
@@ -267,11 +292,21 @@ class specimenActions extends DarwinActions
           $collection = Doctrine::getTable('Collections')->findOneById($form->getObject()->getCollectionRef());
           $autoCodeForUpdate = !$collection->getCodeAutoIncrementForInsertOnly();
         }
+		//specimen is saved there in DB
         $specimen = $form->save();
         if ($wasNew || $autoCodeForUpdate) {
           $response = Doctrine::getTable('Collections')->afterSaveAddCode($specimen->getCollectionRef(), $specimen->getId());
         }
-        $this->redirect('specimen/edit?id='.$specimen->getId());
+		//rmca ftheeten 2015 10 19 to create new identifications
+        if ($request->hasParameter('split_created'))
+		{
+				$this->redirect('specimen/newIdentification?id='.$specimen->getId()."&split_created=".$request->getParameter('split_created'));
+		}
+		else
+		{
+			
+			$this->redirect('specimen/edit?id='.$specimen->getId());
+		}
       }
       catch(Doctrine_Exception $ne)
       {
@@ -504,5 +539,169 @@ class specimenActions extends DarwinActions
   {
     $items_ids = $this->getUser()->getAllPinned('specimen');
     $this->items = Doctrine::getTable('Specimens')->getByMultipleIds($items_ids, $this->getUser()->getId(), $this->getUser()->isAtLeast(Users::ADMIN));
+  }
+  
+  //ftheeten 2015 10 13 to handle new identicication
+				  
+  public function executeNewIdentification(sfWebRequest $request)
+  {
+	  $this->split_id = $request->getParameter('id','0') ;
+	  $this->origin_id = $request->getParameter('split_created','0') ;
+	  $userName=Doctrine_Query::create()->
+			select('u.formated_name')->
+			from('Users u')->
+			where('u.id = ?', $this->getUser()->getId())->fetchOne();
+	  $this->label_author= $userName;
+   
+  }
+  
+    //ftheeten 2015 10 14 to handle duplication of information in new identifications
+  //including code number
+  
+  protected function handleNewIdentification(sfWebRequest $request)
+  {
+  	  $this->newIdentification=TRUE;
+      $specimen = new Specimens() ;
+      $split = $request->getParameter('split_id','0') ;
+      $specimen = $this->getRecordIfDuplicate($split,$specimen,true);
+      // set all necessary widgets to visible
+      if($request->hasParameter('all_duplicate'))
+        Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',1);
+      $this->form = new SpecimensForm($specimen, array("new_identification_rmca"=> TRUE));
+	 
+      if($split)
+      {
+        $this->form->duplicate($split);
+
+        //reembed identification
+        // $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens',$split) ;
+        /*foreach ($Identifications as $key=>$val)
+        {
+          $identification = new Identifications() ;
+          $identification = $this->getRecordIfDuplicate($val->getId(),$identification);
+          $this->form->addIdentifications($key, $val->getOrderBy(), $identification);
+          $Identifier = Doctrine::getTable('CataloguePeople')->getPeopleRelated('identifications', 'identifier', $val->getId()) ;
+          foreach ($Identifier as $key2=>$val2)
+          {
+            $ident = $this->form->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+            $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);
+            $this->form->reembedNewIdentification($ident, $key);
+          }
+        }*/
+		//reembed codes
+		 $Codes = Doctrine::getTable('Codes')->getCodesRelated('specimens',$split) ;
+        foreach ($Codes as $key=>$val)
+        {
+          $this->form->addCodes($key, $val,0, TRUE);
+        }		
+		//end reembed codes
+		//create relationships
+		$rel= Array();
+		$rel["relationship_type"]="other_identification";
+		$rel["specimen_related_ref"]=$split;
+		$this->form->addSpecimensRelationships(0, $rel);
+		$this->original_id=$split;
+		//end relationships
+		
+        $tools = $specimen->SpecimensTools->toArray() ;
+        if(count($tools))
+        {
+          $tab = array() ;
+          foreach ($tools as $key=>$tool)
+            $tab[] = $tool['collecting_tool_ref'] ;
+          $this->form->setDefault('collecting_tools_list',$tab);
+        }
+
+        $methods = $specimen->SpecimensMethods->toArray() ;
+        if(count($methods))
+        {
+          $tab = array() ;
+          foreach ($methods as $key=>$method)
+            $tab[] = $method['collecting_method_ref'] ;
+          $this->form->setDefault('collecting_methods_list',$tab);
+        }
+      }
+  }
+  
+  protected function handlePropertiesOfNewIdentification(sfWebRequest $request)
+  {
+	if($request->hasParameter('split_mode'))
+	{
+
+		//these data come from the "newIdentificationSuccessTemplate
+
+		//duplicate properties
+		$old_id=$request->getParameter("origin_id", "-1");
+		{
+			
+			$this->split_created=$old_id;
+			$properties = Doctrine::getTable('Properties')->findForTable("specimens", $old_id);
+			 foreach($properties as $propertySrc)
+			 {
+				if($propertySrc->getPropertyType()!=="label_created_on"&&$propertySrc->getPropertyType()!=="valid_label"&&$propertySrc->getPropertyType()!=="label_created_by")
+				{
+					$propObj= $propertySrc->copy();
+					$propObj->setRecordId($request->getParameter('id'));
+					$propObj->save();
+				}
+			 }
+		}
+		
+		if($request->hasParameter("invalid_labels"))
+		{
+			//invalidate labels related to the same specimen (both directions, specimen_ref and specimen_related_ref)
+			if($request->getParameter("invalid_labels")=="yes")
+			{
+				$conn = Doctrine_Manager::connection();
+				$sql = "UPDATE properties SET lower_value='No' WHERE referenced_relation= 'specimens' AND property_type='valid_label' 
+					AND (
+						record_id IN (SELECT specimen_ref FROM specimens_relationships WHERE specimen_related_ref= :id ) 
+						OR
+						record_id IN (SELECT specimen_related_ref FROM specimens_relationships WHERE specimen_ref= :id ) 
+						)
+						";
+				
+
+				$q = $conn->prepare($sql);
+				$q->execute(array(':id' => $request->getParameter('id')));
+			}
+		}
+		
+		if($request->hasParameter('create_date_label'))
+		{
+			if($request->getParameter("create_date_label")=="yes")
+			{
+				
+				$propObj= new Properties();
+				$propObj->setReferencedRelation('specimens');
+				$propObj->setPropertyType("label_created_on");
+				$propObj->setRecordId($request->getParameter('id'));
+				$propObj->setLowerValue(strval(date('Ymd')));
+				$propObj->save();
+			}
+		}
+		
+		if($request->hasParameter("valid_label"))
+		{		
+			if($request->getParameter("valid_label")=="yes")
+			{
+				
+				$propObj= new Properties();
+				$propObj->setReferencedRelation('specimens');
+				$propObj->setPropertyType("valid_label");
+				$propObj->setRecordId($request->getParameter('id'));
+				$propObj->setLowerValue("yes");
+				$propObj->save();
+			}
+		}
+		//register user creating the label
+		$propObj= new Properties();
+		$propObj->setReferencedRelation('specimens');
+		$propObj->setPropertyType("label_created_by");
+		$propObj->setRecordId($request->getParameter('id'));
+		$propObj->setLowerValue($request->getParameter('label_author'));
+		$propObj->save();
+		
+	}
   }
 }
