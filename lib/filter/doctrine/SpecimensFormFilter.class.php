@@ -344,6 +344,12 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     $this->validatorSchema['role_ref'] = new sfValidatorChoice(array('choices'=>array_keys($fields_to_search), 'required'=>false)) ;
     $this->validatorSchema['role_ref'] = new sfValidatorPass() ;
 
+	//ftheeten fuzzy matching on people 2015 10 21
+	$this->widgetSchema['people_fuzzy'] = new sfWidgetFormInputText();
+	$this->widgetSchema['people_fuzzy']->setAttributes(array("class"=> "class_fuzzy_people"));
+	$this->validatorSchema['people_fuzzy'] = new sfValidatorString(array('required' => false)) ;
+	$this->validatorSchema['people_fuzzy'] = new sfValidatorPass() ;
+
 
 
     /* Acquisition categories */
@@ -979,6 +985,37 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     $query->andWhere($build_query) ;
     return $query ;
   }
+  
+  //ftheeten: adaptation of addPeopleSearchColumnQuery for fuzzy matching on people (2015 10 21)
+   public function addPeopleSearchColumnQueryFuzzy(Doctrine_Query $query, $people_name, $field_to_use)
+  {
+    $build_query = '';
+    if(! is_array($field_to_use) || count($field_to_use) < 1)
+      $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
+	 $sql_params = array();
+    foreach($field_to_use as $field)
+    {
+      if($field == 'ident_ids')
+      {
+        $build_query .= "s.spec_ident_ids && (SELECT array_agg(ppo.id) FROM people ppo WHERE fulltoindex(formated_name_indexed) ILIKE  '%'||fulltoindex(?)||'%' ) OR " ;
+		$sql_params[]=$people_name;
+      }
+      elseif($field == 'spec_coll_ids')
+      {
+        $build_query .= "s.spec_coll_ids && (SELECT array_agg(ppc.id) FROM people ppc WHERE fulltoindex(formated_name_indexed)ILIKE '%'||fulltoindex(?)||'%' ) OR " ;
+		$sql_params[]=$people_name;
+      }
+      else
+      {
+        $build_query .= "s.spec_don_sel_ids && (SELECT array_agg(ppa.id) FROM people ppa WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%' ) OR " ;
+		$sql_params[]=$people_name;
+      }
+    }
+    // I remove the last 'OR ' at the end of the string
+    $build_query = substr($build_query,0,strlen($build_query) -3) ;
+    $query->andWhere($build_query, $sql_params) ;
+    return $query ;
+  }
 
   public function addObjectNameColumnQuery($query, $field, $val) {
     $val = $this->checksToQuotedValues($val);
@@ -1155,6 +1192,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       if($values['count_operator'] == 'g') $query->andwhere('specimen_count_min >= ?',$values['count']) ;
     }
     if ($values['people_ref'] != '') $this->addPeopleSearchColumnQuery($query, $values['people_ref'], $values['role_ref']);
+	if ($values['people_fuzzy'] != '') $this->addPeopleSearchColumnQueryFuzzy($query, $values['people_fuzzy'], $values['role_ref']);
     if ($values['acquisition_category'] != '' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));
