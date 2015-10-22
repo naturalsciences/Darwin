@@ -44,6 +44,13 @@ $(document).ready(function () {
 	check_state();
   });
  
+  if($('#specimen_search_filters_people_fuzzy').val() != '')
+  {
+	tmpVal=$('#specimen_search_filters_people_fuzzy').val();
+    $('#people_switch_fuzzy').trigger("click") ;
+	$('#specimen_search_filters_people_fuzzy').val(tmpVal);
+  }
+ 
 });
 
   function check_state()
@@ -64,4 +71,6 @@ $(document).ready(function () {
 				$('.fuzzy_people').find('input:text').val("");
 			}
   }
+  
+
 </script>
