@@ -983,7 +983,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       }
       elseif($field == 'spec_coll_ids')
       {
-        $build_query .= "s.spec_coll_ids @> ARRAY[$people_id]::int[] OR " ;
+        $build_query .= "(s.spec_coll_ids @> ARRAY[$people_id]::int[] OR (s.expedition_ref IN (SELECT cp.record_id FROM CataloguePeople cp WHERE cp.referenced_relation= 'expeditions' AND cp.people_ref= $people_id) )) OR " ;
       }
       else
       {
@@ -1012,7 +1012,8 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       }
       elseif($field == 'spec_coll_ids')
       {
-        $build_query .= "s.spec_coll_ids && (SELECT array_agg(ppc.id) FROM people ppc WHERE fulltoindex(formated_name_indexed)ILIKE '%'||fulltoindex(?)||'%' ) OR " ;
+         $build_query .= "(s.spec_coll_ids && (SELECT array_agg(ppc.id) FROM people ppc WHERE fulltoindex(formated_name_indexed)ILIKE '%'||fulltoindex(?)||'%' ) OR s.expedition_ref IN (SELECT cp.record_id FROM CataloguePeople cp WHERE cp.referenced_relation= 'expeditions' AND cp.people_ref IN (SELECT ppd.id FROM people ppd WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%')) ) OR " ;
+		$sql_params[]=$people_name;
 		$sql_params[]=$people_name;
       }
       else
