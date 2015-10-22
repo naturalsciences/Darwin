@@ -20,7 +20,17 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     $this->addPagerItems();
 
     $this->widgetSchema['gtu_code'] = new sfWidgetFormInputText();
-    $this->widgetSchema['expedition_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
+	$this->widgetSchema['expedition_ref'] = new widgetFormButtonRef(array(
+	  'label'=> $this->getI18N()->__('Choose Expedition'),
+      'model' => 'Expeditions',
+      'link_url' => 'expedition/choose',
+      'method' => 'getName',
+      'box_title' => $this->getI18N()->__('Choose Expedition'),
+      'nullable' => true,
+      'button_class'=>'',
+       ),
+      array('class'=>'inline',)
+    );
 
     $this->widgetSchema['taxon_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['taxon_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
@@ -209,10 +219,10 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       'trim' => true
     ));
 
-    $this->validatorSchema['expedition_name'] = new sfValidatorString(array(
+    $this->validatorSchema['expedition_ref'] = new sfValidatorInteger(array(
       'required' => false,
-      'trim' => true
     ));
+	
     $this->validatorSchema['taxon_name'] = new sfValidatorString(array(
       'required' => false,
       'trim' => true
@@ -1199,8 +1209,10 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));
     if ($values['lithology_level_ref'] != '') $query->andWhere('lithology_level_ref = ?', intval($values['lithology_level_ref']));
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
+	if ($values['expedition_ref'] != '') $query->andWhere('expedition_ref = ?', intval($values['expedition_ref']));
+
     $this->addLatLonColumnQuery($query, $values);
-    $this->addNamingColumnQuery($query, 'expeditions', 'expedition_name_indexed', $values['expedition_name'],'s','expedition_name_indexed');
+
 
     $this->addNamingColumnQuery($query, 'taxonomy', 'taxon_name_indexed', $values['taxon_name'],'s','taxon_name_indexed');
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'chrono_name_indexed', $values['chrono_name'],'s','chrono_name_indexed');
