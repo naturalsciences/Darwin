@@ -638,6 +638,13 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     // For compat only with old saved search
     // FIXME: might be removed with a migration
     $this->validatorSchema['what_searched'] = new sfValidatorPass();
+	
+		//ftheeten 2015 10 23 to handle search on several peoples
+	$this->widgetSchema['people_boolean'] = new sfWidgetFormChoice(array('choices' => array('OR' => 'OR', 'AND' => 'AND')));
+  	////ftheeten 2015 10 23
+	$this->validatorSchema['people_boolean'] = new sfValidatorPass();
+	$subForm = new sfForm();
+    $this->embedForm('Peoples',$subForm);
   }
 
   public function addGtuTagValue($num)
@@ -645,6 +652,15 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       $form = new TagLineForm(null,array('num'=>$num));
       $this->embeddedForms['Tags']->embedForm($num, $form);
       $this->embedForm('Tags', $this->embeddedForms['Tags']);
+  }
+  
+  //rmca 2015 27 10 to handle search on several peoples
+  public function addPeopleValue($num)
+  {
+	 
+      $form = new PeopleLineForm(null,array('num'=>$num));
+      $this->embeddedForms['Peoples']->embedForm($num, $form);
+      $this->embedForm('Peoples', $this->embeddedForms['Peoples']);
   }
 
 
@@ -905,6 +921,29 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     return $query ;
   }
 
+  
+    //ftheeten 2015 10 22 handle several peoples
+  public function addPeoplesColumnQuery($query, $field, $val)
+  {
+
+
+    foreach($val as $i=>$people)
+    {
+
+	  if(empty($people)) continue;
+	   if ($people['people_ref'] != '')
+		{
+			$this->addPeopleSearchColumnQuery($query, $people['people_ref'], $people['role_ref'], $i, $this->people_boolean);
+		}
+		if ($people['people_fuzzy'] != '') 
+		{
+
+			$this->addPeopleSearchColumnQueryFuzzy($query, $people['people_fuzzy'], $people['role_ref'], $i, $this->people_boolean);
+		}
+    }
+    return $query ;
+  }
+  
   public function addCodesColumnQuery($query, $field, $val)
   {
 
@@ -969,8 +1008,13 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     return $query ;
   }
 
-  public function addPeopleSearchColumnQuery(Doctrine_Query $query, $people_id, $field_to_use)
+   public function addPeopleSearchColumnQuery(Doctrine_Query $query, $people_id, $field_to_use, $alias_id=NULL, $boolean="AND")
   {
+	$alias1="cp";
+	if($alias_id)
+	{
+		$alias1=$alias1.$alias_id;
+	}
     $build_query = '';
     if(! is_array($field_to_use) || count($field_to_use) < 1)
       $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
@@ -983,7 +1027,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       }
       elseif($field == 'spec_coll_ids')
       {
-        $build_query .= "(s.spec_coll_ids @> ARRAY[$people_id]::int[] OR (s.expedition_ref IN (SELECT cp.record_id FROM CataloguePeople cp WHERE cp.referenced_relation= 'expeditions' AND cp.people_ref= $people_id) )) OR " ;
+        $build_query .= "(s.spec_coll_ids @> ARRAY[$people_id]::int[] OR (s.expedition_ref IN (SELECT $alias1.record_id FROM CataloguePeople $alias1 WHERE $alias1.referenced_relation= 'expeditions' AND $alias1.people_ref= $people_id) )) OR " ;
       }
       else
       {
@@ -992,13 +1036,43 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     }
     // I remove the last 'OR ' at the end of the string
     $build_query = substr($build_query,0,strlen($build_query) -3) ;
-    $query->andWhere($build_query) ;
+	if($boolean=="AND")
+	{
+		$query->andWhere($build_query) ;
+	}
+	elseif($boolean=="OR")
+	{
+		$query->orWhere($build_query) ;
+	}
+	
+
     return $query ;
   }
-  
-  //ftheeten: adaptation of addPeopleSearchColumnQuery for fuzzy matching on people (2015 10 21)
-   public function addPeopleSearchColumnQueryFuzzy(Doctrine_Query $query, $people_name, $field_to_use)
+
+   //rmca 2015 10 27 several peoples in fuzzy matching
+   public function addPeopleSearchColumnQueryFuzzy(Doctrine_Query $query, $people_name, $field_to_use, $alias_id=NULL, $boolean="AND")
   {
+    $alias1="ppa";
+	$alias2="ppb";
+	$alias3="cp";
+	$alias4="ppc";
+	$alias5="ppd";
+	$idxAlias1=1;
+	//aliad must be different for each people otherwise conflict
+	if($alias_id)
+	{
+			$idxAlias1=	$idxAlias1+$alias_id;
+		
+	}
+	$alias1=$alias1.$idxAlias1;
+	$idxAlias1++;
+	$alias2=$alias2.$idxAlias1;
+	$idxAlias1++;
+	$alias3=$alias3.$idxAlias1;
+	$idxAlias1++;
+	$alias4=$alias4.$idxAlias1;
+	$idxAlias1++;
+	$alias5=$alias5.$idxAlias1;
     $build_query = '';
     if(! is_array($field_to_use) || count($field_to_use) < 1)
       $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
@@ -1007,24 +1081,31 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     {
       if($field == 'ident_ids')
       {
-        $build_query .= "s.spec_ident_ids && (SELECT array_agg(ppo.id) FROM people ppo WHERE fulltoindex(formated_name_indexed) ILIKE  '%'||fulltoindex(?)||'%' ) OR " ;
+        $build_query .= "s.spec_ident_ids && (SELECT array_agg($alias1.id) FROM people $alias1 WHERE fulltoindex(formated_name_indexed) ILIKE  '%'||fulltoindex(?)||'%' ) OR " ;
 		$sql_params[]=$people_name;
       }
       elseif($field == 'spec_coll_ids')
       {
-         $build_query .= "(s.spec_coll_ids && (SELECT array_agg(ppc.id) FROM people ppc WHERE fulltoindex(formated_name_indexed)ILIKE '%'||fulltoindex(?)||'%' ) OR s.expedition_ref IN (SELECT cp.record_id FROM CataloguePeople cp WHERE cp.referenced_relation= 'expeditions' AND cp.people_ref IN (SELECT ppd.id FROM people ppd WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%')) ) OR " ;
+        $build_query .= "(s.spec_coll_ids && (SELECT array_agg($alias2.id) FROM people $alias2 WHERE fulltoindex(formated_name_indexed)ILIKE '%'||fulltoindex(?)||'%' ) OR s.expedition_ref IN (SELECT $alias3.record_id FROM CataloguePeople $alias3 WHERE $alias3.referenced_relation= 'expeditions' AND $alias3.people_ref IN (SELECT $alias4.id FROM people $alias4 WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%')) ) OR " ;
 		$sql_params[]=$people_name;
 		$sql_params[]=$people_name;
       }
       else
       {
-        $build_query .= "s.spec_don_sel_ids && (SELECT array_agg(ppa.id) FROM people ppa WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%' ) OR " ;
+        $build_query .= "s.spec_don_sel_ids && (SELECT array_agg($alias5.id) FROM people $alias5 WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%' ) OR " ;
 		$sql_params[]=$people_name;
       }
     }
     // I remove the last 'OR ' at the end of the string
     $build_query = substr($build_query,0,strlen($build_query) -3) ;
-    $query->andWhere($build_query, $sql_params) ;
+    if($boolean=="AND")
+	{
+		$query->andWhere($build_query, $sql_params) ;
+	}
+	elseif($boolean=="OR")
+	{
+		$query->orWhere($build_query, $sql_params) ;
+	}
     return $query ;
   }
 
@@ -1202,8 +1283,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
       if($values['count_operator'] == 'l') $query->andwhere('specimen_count_max <= ?',$values['count']) ;
       if($values['count_operator'] == 'g') $query->andwhere('specimen_count_min >= ?',$values['count']) ;
     }
-    if ($values['people_ref'] != '') $this->addPeopleSearchColumnQuery($query, $values['people_ref'], $values['role_ref']);
-	if ($values['people_fuzzy'] != '') $this->addPeopleSearchColumnQueryFuzzy($query, $values['people_fuzzy'], $values['role_ref']);
+
     if ($values['acquisition_category'] != '' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));

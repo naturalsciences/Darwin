@@ -217,7 +217,7 @@ class specimensearchActions extends DarwinActions
     $flds = array('category','collection','taxon','type','gtu','codes','chrono','ig','acquisition_category',
               'litho','lithologic','mineral','expedition','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part', 'object_name', 'part_status', 'building', 'floor', 'room', 'row', 'col' ,'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
-              'sub_container_type' , 'sub_container_storage', 'specimen_count','part_codes');
+              'sub_container_type' , 'sub_container_storage', 'specimen_count','part_codes', 'col_peoples', 'ident_peoples','don_peoples');
 
 
     $flds = array_fill_keys($flds, 'uncheck');
@@ -256,6 +256,15 @@ class specimensearchActions extends DarwinActions
     return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number], 'row_line'=>$number));
   }
 
+   public function executeAddPeople(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+
+    $form = new SpecimensFormFilter(null,array('user' => $this->getUser()));
+    $form->addPeopleValue($number);
+    return $this->renderPartial('addPeople',array('form' => $form['Peoples'][$number], 'row_line'=>$number));
+  }
+  
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
@@ -283,6 +292,15 @@ class specimensearchActions extends DarwinActions
       'codes' => array(
         false,
         $this->getI18N()->__('Codes'),),
+		'col_peoples' => array(
+        'col_peoples',
+        $this->getI18N()->__('Collectors'),),
+	    'ident_peoples' => array(
+        'ident_peoples',
+        $this->getI18N()->__('Identifiers'),),
+		'don_peoples' => array(
+        'don_peoples',
+        $this->getI18N()->__('Donators'),),
       'chrono' => array(
         'chrono_name_indexed',
         $this->getI18N()->__('Chronostratigraphic unit'),),
