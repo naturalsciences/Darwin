@@ -219,7 +219,6 @@ class specimensearchActions extends DarwinActions
               'part', 'object_name', 'part_status', 'building', 'floor', 'room', 'row', 'col' ,'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
               'sub_container_type' , 'sub_container_storage', 'specimen_count','part_codes', 'col_peoples', 'ident_peoples','don_peoples');
 
-
     $flds = array_fill_keys($flds, 'uncheck');
 
     if($form->isBound() && $form->getValue('col_fields') != "")
