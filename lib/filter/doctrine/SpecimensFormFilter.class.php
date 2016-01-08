@@ -937,7 +937,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 		}
 		if ($people['people_fuzzy'] != '') 
 		{
-
+			//for ticket #1863
 			$this->addPeopleSearchColumnQueryFuzzy($query, $people['people_fuzzy'], $people['role_ref'], $i, $this->people_boolean);
 		}
     }
@@ -1049,7 +1049,8 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     return $query ;
   }
 
-   //rmca 2015 10 27 several peoples in fuzzy matching
+   //rmca 2015 10 27 several peoples in fuzzy matching (ticket #1863)
+   
    public function addPeopleSearchColumnQueryFuzzy(Doctrine_Query $query, $people_name, $field_to_use, $alias_id=NULL, $boolean="AND")
   {
     $alias1="ppa";
