@@ -1058,7 +1058,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 	$alias4="ppc";
 	$alias5="ppd";
 	$idxAlias1=1;
-	//aliad must be different for each people otherwise conflict
+	//aliases must be different for each people otherwise conflict
 	if($alias_id)
 	{
 			$idxAlias1=	$idxAlias1+$alias_id;
