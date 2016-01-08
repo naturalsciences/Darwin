@@ -256,6 +256,7 @@ class specimensearchActions extends DarwinActions
     return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number], 'row_line'=>$number));
   }
 
+  //ftheeten 2015 10 27 (to link to ticket #1863)
    public function executeAddPeople(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
