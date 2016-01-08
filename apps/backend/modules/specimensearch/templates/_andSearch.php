@@ -1,14 +1,17 @@
 <tr class="tag_line">
-  <td colspan="3">
+  <td colspan="2">
     <?php echo $form['tag'];?>
     <div class="purposed_tags" id="purposed_tags_<?php echo $row_line;?>">
     </div>
   </td>
-  <td class="widget_row_delete">
-    <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop id=clear_tag_'.$row_line); ?>
-  </td>
   <td>
-	<input type="button" value="fuzzy associations" name="btn_fuz_<?php echo($row_line);?>" id="btn_fuz_<?php echo($row_line);?>" class="result_choose"/>
+  	 <b><?php echo $form['fuzzy_matching_tag']->renderLabel();?></b>:<?php echo $form['fuzzy_matching_tag'];?>
+  </td>
+   <td>
+	<input type="button" value="Tag cloud" name="btn_fuz_<?php echo($row_line);?>" id="btn_fuz_<?php echo($row_line);?>" class="result_choose"/>
+  </td>
+    <td class="widget_row_delete"  style="text-align:right">
+    <b>Delete:</b><?php echo image_tag('remove.png', 'alt=Delete class=clear_prop id=clear_tag_'.$row_line); ?>
   </td>
 </tr>
 <script  type="text/javascript">

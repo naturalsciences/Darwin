@@ -890,37 +890,76 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     return $query ;
   }
 
-  public function addTagsColumnQuery($query, $field, $val)
+    public function addTagsColumnQuery($query, $field, $val)
   {
     $alias = $query->getRootAlias();
     $conn_MGR = Doctrine_Manager::connection();
     $tagList = '';
 
-    foreach($val as $line)
+
+	//ftheeten 2016 01 08 (to enable fuzzy matching on tags)
+	$alias="gtu";
+	$idxAlias=1;
+	foreach($val as $line)
     {
-      $line_val = $line['tag'];
-      if( $line_val != '')
-      {
-        $tagList = $conn_MGR->quote($line_val, 'string');
-        $query->andWhere("
-              (station_visible = true AND  gtu_tag_values_indexed && getTagsIndexedAsArray($tagList))
-               OR
-              (station_visible = false
-               AND (
-                    (
-                      collection_ref in (".implode(',',$this->encoding_collection).")
-                      AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
-                    )
-                    OR
-                    (gtu_country_tag_indexed && getTagsIndexedAsArray($tagList))
-                  )
-              )");
-        $query->whereParenWrap();
-      }
-    }
+	
+		  $line_val = $line['tag'];
+		  $tagList = $conn_MGR->quote($line_val, 'string');
+		  
+		     $alias=$alias.$idxAlias;
+			$idxAlias++;
+		  if($line_val != '')
+		  {
+				//fuzzy
+			  if($line['fuzzy_matching_tag']=="on")
+			  {
+				
+					$query->andWhere(" ((station_visible = true AND 
+					(gtu_ref in (SELECT $alias.gtu_ref FROM tags $alias WHERE ($alias.tag_indexed
+					LIKE
+					ANY(SELECT '%'||fulltoindex(regexp_split_to_table($tagList,','))||'%'))))
+					) OR
+					(station_visible = false
+					  AND (
+						(
+						  collection_ref in (".implode(',',$this->encoding_collection).")
+						  AND (gtu_ref in (SELECT $alias.gtu_ref FROM tags $alias WHERE ($alias.tag_indexed
+							LIKE
+							ANY(SELECT '%'||fulltoindex(regexp_split_to_table($tagList,','))||'%'))))
+						)
+						OR
+						(gtu_ref in (SELECT $alias.gtu_ref FROM tags $alias WHERE ($alias.tag_indexed
+							LIKE
+							ANY(SELECT '%'||fulltoindex(regexp_split_to_table($tagList,','))||'%'))
+							AND sub_group_type='Country'))
+						)
+					))");
+					
+			  }
+			   //exact match (old code)
+			  else
+			  {
+			
+				$query->andWhere("
+				  (station_visible = true AND  gtu_tag_values_indexed && getTagsIndexedAsArray($tagList))
+				   OR
+				  (station_visible = false
+				   AND (
+						(
+						  collection_ref in (".implode(',',$this->encoding_collection).")
+						  AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
+						)
+						OR
+						(gtu_country_tag_indexed && getTagsIndexedAsArray($tagList))
+					  )
+				  )");
+			  }
+	  }
+
+	}
+	$query->whereParenWrap();
     return $query ;
   }
-
   
     //ftheeten 2015 10 22 handle several peoples
   public function addPeoplesColumnQuery($query, $field, $val)
