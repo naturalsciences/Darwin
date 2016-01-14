@@ -890,96 +890,73 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     return $query ;
   }
 
-    public function addTagsColumnQuery($query, $field, $val)
+  public function addTagsColumnQuery($query, $field, $val)
   {
     $alias = $query->getRootAlias();
     $conn_MGR = Doctrine_Manager::connection();
     $tagList = '';
 
-
-	//ftheeten 2016 01 08 (to enable fuzzy matching on tags)
-	$alias="gtu";
-	$idxAlias=1;
-	foreach($val as $line)
+    foreach($val as $line)
     {
-	
-		  $line_val = $line['tag'];
-		  $tagList = $conn_MGR->quote($line_val, 'string');
-		  
-		     $alias=$alias.$idxAlias;
-			$idxAlias++;
-		  if($line_val != '')
-		  {
-				//fuzzy
-			  if($line['fuzzy_matching_tag']=="on")
-			  {
-				
-					$query->andWhere(" ((station_visible = true AND 
-					(gtu_ref in (SELECT $alias.gtu_ref FROM tags $alias WHERE ($alias.tag_indexed
-					LIKE
-					ANY(SELECT '%'||fulltoindex(regexp_split_to_table($tagList,','))||'%'))))
-					) OR
-					(station_visible = false
-					  AND (
-						(
-						  collection_ref in (".implode(',',$this->encoding_collection).")
-						  AND (gtu_ref in (SELECT $alias.gtu_ref FROM tags $alias WHERE ($alias.tag_indexed
-							LIKE
-							ANY(SELECT '%'||fulltoindex(regexp_split_to_table($tagList,','))||'%'))))
-						)
-						OR
-						(gtu_ref in (SELECT $alias.gtu_ref FROM tags $alias WHERE ($alias.tag_indexed
-							LIKE
-							ANY(SELECT '%'||fulltoindex(regexp_split_to_table($tagList,','))||'%'))
-							AND sub_group_type='Country'))
-						)
-					))");
-					
-			  }
-			   //exact match (old code)
-			  else
-			  {
-			
-				$query->andWhere("
-				  (station_visible = true AND  gtu_tag_values_indexed && getTagsIndexedAsArray($tagList))
-				   OR
-				  (station_visible = false
-				   AND (
-						(
-						  collection_ref in (".implode(',',$this->encoding_collection).")
-						  AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
-						)
-						OR
-						(gtu_country_tag_indexed && getTagsIndexedAsArray($tagList))
-					  )
-				  )");
-			  }
-	  }
-
-	}
-	$query->whereParenWrap();
+      $line_val = $line['tag'];
+      if( $line_val != '')
+      {
+        $tagList = $conn_MGR->quote($line_val, 'string');
+        $query->andWhere("
+              (station_visible = true AND  gtu_tag_values_indexed && getTagsIndexedAsArray($tagList))
+               OR
+              (station_visible = false
+               AND (
+                    (
+                      collection_ref in (".implode(',',$this->encoding_collection).")
+                      AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
+                    )
+                    OR
+                    (gtu_country_tag_indexed && getTagsIndexedAsArray($tagList))
+                  )
+              )");
+        $query->whereParenWrap();
+      }
+    }
     return $query ;
   }
+
   
-    //ftheeten 2015 10 22 handle several peoples
-  public function addPeoplesColumnQuery($query, $field, $val)
+ //ftheeten 2015 10 22  updated 2016 01 14 (handle several peoples)
+    public function addPeoplesColumnQuery($query, $field, $val)
   {
 
-
+    
+	$queriesPeople=Array();
+	$array_peoples=array();
     foreach($val as $i=>$people)
     {
-
+		$query_people="";
 	  if(empty($people)) continue;
 	   if ($people['people_ref'] != '')
 		{
-			$this->addPeopleSearchColumnQuery($query, $people['people_ref'], $people['role_ref'], $i, $this->people_boolean);
+
+			//(to handle "(people Or people ) A?D somethign else")
+			$query_people=$this->addPeopleSearchColumnQuerySQL( $people['people_ref'], $people['role_ref'], $i);
+			$queriesPeople[]=$query_people;
+			
 		}
 		if ($people['people_fuzzy'] != '') 
 		{
-			//for ticket #1863
-			$this->addPeopleSearchColumnQueryFuzzy($query, $people['people_fuzzy'], $people['role_ref'], $i, $this->people_boolean);
+
+			$iParams=0;
+			$query_people=$this->addPeopleSearchColumnQueryFuzzySQL( $people['people_fuzzy'], $people['role_ref'], $i, $iParams);
+			$queriesPeople[]=$query_people;
+			for($iP=0; $iP<$iParams;$iP++)
+			{
+				$array_peoples[]=$people['people_fuzzy'];
+			}
 		}
+		
+		
     }
+	//$query_people="(".implode($this->people_boolean, $queriesPeoples).")";
+	$query->andWhere("(".implode(" ".$this->people_boolean. " ", $queriesPeople).")",$array_peoples);
     return $query ;
   }
   
@@ -1050,28 +1027,35 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
    public function addPeopleSearchColumnQuery(Doctrine_Query $query, $people_id, $field_to_use, $alias_id=NULL, $boolean="AND")
   {
 	$alias1="cp";
+
 	if($alias_id)
 	{
 		$alias1=$alias1.$alias_id;
+
 	}
     $build_query = '';
     if(! is_array($field_to_use) || count($field_to_use) < 1)
       $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
 
+	$nb2=0;  
     foreach($field_to_use as $field)
     {
-      if($field == 'ident_ids')
+       $alias1=$alias1.$nb2;
+
+	  if($field == 'ident_ids')
       {
-        $build_query .= "s.spec_ident_ids @> ARRAY[$people_id]::int[] OR " ;
+		$build_query .= "s.spec_ident_ids @> ARRAY[$people_id]::int[] OR " ;
       }
       elseif($field == 'spec_coll_ids')
       {
-        $build_query .= "(s.spec_coll_ids @> ARRAY[$people_id]::int[] OR (s.expedition_ref IN (SELECT $alias1.record_id FROM CataloguePeople $alias1 WHERE $alias1.referenced_relation= 'expeditions' AND $alias1.people_ref= $people_id) )) OR " ;
+         $build_query .= "(s.spec_coll_ids @> ARRAY[$people_id]::int[] OR (s.expedition_ref IN (SELECT $alias1.record_id FROM CataloguePeople $alias1 WHERE $alias1.referenced_relation= 'expeditions' AND $alias1.people_ref= $people_id) )) OR " ;
+
       }
       else
       {
         $build_query .= "s.spec_don_sel_ids @> ARRAY[$people_id]::int[] OR " ;
       }
+	  $nb2++;
     }
     // I remove the last 'OR ' at the end of the string
     $build_query = substr($build_query,0,strlen($build_query) -3) ;
@@ -1081,15 +1065,62 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 	}
 	elseif($boolean=="OR")
 	{
-		$query->orWhere($build_query) ;
+		if($alias_id>1)
+		{
+		 $query->orWhere($build_query) ;
+		}
+		else
+		{
+		 $query->andWhere($build_query) ;
+		}
 	}
 	
 
     return $query ;
   }
+  
+    //ftheeten 2016 01 14
+    public function addPeopleSearchColumnQuerySQL($people_id, $field_to_use, $alias_id=NULL)
+  {
+	$alias1="cp";
 
-   //rmca 2015 10 27 several peoples in fuzzy matching (ticket #1863)
-   
+
+	if($alias_id)
+	{
+		$alias1=$alias1.$alias_id;
+
+	}
+    $build_query = '';
+    if(! is_array($field_to_use) || count($field_to_use) < 1)
+      $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
+
+	$nb2=0;  
+    foreach($field_to_use as $field)
+    {
+       $alias1=$alias1.$nb2;
+
+	  if($field == 'ident_ids')
+      {
+		$build_query .= "s.spec_ident_ids @> ARRAY[$people_id]::int[] OR " ;
+      }
+      elseif($field == 'spec_coll_ids')
+      {
+         $build_query .= "(s.spec_coll_ids @> ARRAY[$people_id]::int[] OR (s.expedition_ref IN (SELECT $alias1.record_id FROM CataloguePeople $alias1 WHERE $alias1.referenced_relation= 'expeditions' AND $alias1.people_ref= $people_id) )) OR " ;
+
+      }
+      else
+      {
+        $build_query .= "s.spec_don_sel_ids @> ARRAY[$people_id]::int[] OR " ;
+      }
+  
+	  $nb2++;
+    }
+    // I remove the last 'OR ' at the end of the string
+    $build_query = substr($build_query,0,strlen($build_query) -3) ;
+	return $build_query;
+  }
+
+  
    public function addPeopleSearchColumnQueryFuzzy(Doctrine_Query $query, $people_name, $field_to_use, $alias_id=NULL, $boolean="AND")
   {
     $alias1="ppa";
@@ -1098,11 +1129,9 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 	$alias4="ppc";
 	$alias5="ppd";
 	$idxAlias1=1;
-	//aliases must be different for each people otherwise conflict
 	if($alias_id)
 	{
-			$idxAlias1=	$idxAlias1+$alias_id;
-		
+		$idxAlias1=	$idxAlias1+$alias_id;
 	}
 	$alias1=$alias1.$idxAlias1;
 	$idxAlias1++;
@@ -1144,9 +1173,70 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 	}
 	elseif($boolean=="OR")
 	{
-		$query->orWhere($build_query, $sql_params) ;
+		if($alias_id>1)
+		{
+		 $query->orWhere($build_query, $sql_params) ;
+		}
+		else
+		{
+		 $query->andWhere($build_query, $sql_params) ;
+		}
 	}
     return $query ;
+  }
+  
+  //ftheeten 2016 01 14
+  public function addPeopleSearchColumnQueryFuzzySQL( $people_name, $field_to_use, $alias_id=NULL, &$count_names)
+  {
+    $alias1="ppa";
+	$alias2="ppb";
+	$alias3="cp";
+	$alias4="ppc";
+	$alias5="ppd";
+	$idxAlias1=1;
+	$count_names=0;
+	if($alias_id)
+	{
+			$idxAlias1=	$idxAlias1+$alias_id;
+		
+	}
+	$alias1=$alias1.$idxAlias1;
+	$idxAlias1++;
+	$alias2=$alias2.$idxAlias1;
+	$idxAlias1++;
+	$alias3=$alias3.$idxAlias1;
+	$idxAlias1++;
+	$alias4=$alias4.$idxAlias1;
+	$idxAlias1++;
+	$alias5=$alias5.$idxAlias1;
+    $build_query = '';
+    if(! is_array($field_to_use) || count($field_to_use) < 1)
+      $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
+	 //$sql_params = array();
+    foreach($field_to_use as $field)
+    {
+      if($field == 'ident_ids')
+      {
+        $build_query .= "s.spec_ident_ids && (SELECT array_agg($alias1.id) FROM people $alias1 WHERE fulltoindex(formated_name_indexed) ILIKE  '%'||fulltoindex(?)||'%' ) OR " ;
+		$count_names++;
+      }
+      elseif($field == 'spec_coll_ids')
+      {
+        $build_query .= "(s.spec_coll_ids && (SELECT array_agg($alias2.id) FROM people $alias2 WHERE fulltoindex(formated_name_indexed)ILIKE '%'||fulltoindex(?)||'%' ) OR s.expedition_ref IN (SELECT $alias3.record_id FROM CataloguePeople $alias3 WHERE $alias3.referenced_relation= 'expeditions' AND $alias3.people_ref IN (SELECT $alias4.id FROM people $alias4 WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%')) ) OR " ;
+
+		$count_names++;
+		$count_names++;
+      }
+      else
+      {
+        $build_query .= "s.spec_don_sel_ids && (SELECT array_agg($alias5.id) FROM people $alias5 WHERE fulltoindex(formated_name_indexed) ILIKE '%'||fulltoindex(?)||'%' ) OR " ;
+		$count_names++;
+      }
+    }
+    // I remove the last 'OR ' at the end of the string
+    $build_query = substr($build_query,0,strlen($build_query) -3) ;
+    
+    return $build_query ;
   }
 
   public function addObjectNameColumnQuery($query, $field, $val) {
