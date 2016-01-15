@@ -955,8 +955,10 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 		
 		
     }
-	//$query_people="(".implode($this->people_boolean, $queriesPeoples).")";
-	$query->andWhere("(".implode(" ".$this->people_boolean. " ", $queriesPeople).")",$array_peoples);
+	if(count($queriesPeople)>0)
+	{
+		$query->andWhere("(".implode(" ".$this->people_boolean. " ", $queriesPeople).")",$array_peoples);
+    }
     return $query ;
   }
   
