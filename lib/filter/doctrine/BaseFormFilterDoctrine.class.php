@@ -414,6 +414,81 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     }
     return $query ;
   }
+  
+  public function addCatalogueRelationColumnQueryArrayRelations($query, $item_ref, $relations, $table, $field_prefix)
+  {
+
+    if($item_ref != 0)
+    {
+	$i=0;
+	$queryTmp="";
+	foreach($relations as $relation)
+	{
+		
+		$arrayParams=Array();
+      		if($relation == 'equal')
+      		{
+			if($i>0)
+				{
+					$queryTmp.= " OR ";
+				}
+        		
+			$queryTmp.=$field_prefix."_ref = ".$item_ref ;
+
+      		}
+      		if($relation == 'child')
+      		{
+			if($i>0)
+				{
+					$queryTmp.= " OR ";
+				}
+        		$item  = Doctrine::getTable($table)->find($item_ref);
+        		
+			$queryTmp.=$field_prefix."_path like '".$item->getPath().''.$item->getId().'/%'."'" ;
+
+      		}
+      		if($relation == 'direct_child')
+      		{
+			if($i>0)
+				{
+					$queryTmp.= " OR ";
+				}
+        		
+			$queryTmp.=$field_prefix."_parent_ref = ".$item_ref;
+      		}
+      		if($relation =='synonym')
+      		{
+				
+				if($i>0)
+				{
+					$queryTmp.= " OR ";
+
+
+				}
+				$queryTmp.= " ( ";
+
+        		$synonyms = Doctrine::getTable('ClassificationSynonymies')->findSynonymsIds($table, $item_ref);
+
+        		
+				if(empty($synonyms))
+				{
+					$queryTmp.=" 0=1 ";
+				}
+				else
+				{
+					$queryTmp.=$field_prefix."_ref IN (".implode(",", $synonyms ).")";
+					$queryTmp.=" AND ".$field_prefix."_ref != ".$item_ref;
+				}
+				$queryTmp.= " ) ";
+
+      		}
+		$i++;
+	}
+
+	$query->andWhere($queryTmp);
+    }
+    return $query ;
+  }
 
   public static function getCollectionWithRights($user, $with_writing=false)
   {

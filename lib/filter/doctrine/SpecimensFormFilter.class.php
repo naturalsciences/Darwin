@@ -45,7 +45,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     $this->widgetSchema['taxon_child_syn_included']->setOption('label','Syn. included ?');
 
     $this->validatorSchema['taxon_item_ref'] = new sfValidatorInteger(array('required'=>false));
-    $this->validatorSchema['taxon_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+    $this->validatorSchema['taxon_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel), 'multiple'=>true));
     $this->validatorSchema['taxon_child_syn_included'] = new sfValidatorBoolean();
 
     $this->widgetSchema['lithology_relation'] = new sfWidgetFormChoice(array('choices'=> $rel,'expanded'=> true));
@@ -1194,7 +1194,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     $this->addDateFromToColumnQuery($query, array('ig_date'), $values['ig_from_date'], $values['ig_to_date']);
     $this->addDateFromToColumnQuery($query, array('acquisition_date'), $values['acquisition_from_date'], $values['acquisition_to_date']);
 
-    $this->addCatalogueRelationColumnQuery($query, $values['taxon_item_ref'], $values['taxon_relation'],'taxonomy','taxon', $values['taxon_child_syn_included']);
+    $this->addCatalogueRelationColumnQueryArrayRelations($query, $values['taxon_item_ref'], $values['taxon_relation'],'taxonomy','taxon');
     $this->addCatalogueRelationColumnQuery($query, $values['chrono_item_ref'], $values['chrono_relation'],'chronostratigraphy','chrono', $values['chrono_child_syn_included']);
     $this->addCatalogueRelationColumnQuery($query, $values['litho_item_ref'], $values['litho_relation'],'lithostratigraphy','litho', $values['litho_child_syn_included']);
     $this->addCatalogueRelationColumnQuery($query, $values['lithology_item_ref'], $values['lithology_relation'],'lithology','lithology', $values['lithology_child_syn_included']);
