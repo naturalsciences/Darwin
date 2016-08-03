@@ -169,7 +169,7 @@ class specimensearchActions extends DarwinActions
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
 
-          //Load Codes and related for each item
+          //Load Codes and Loans and related for each item
           $this->loadRelated();
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
           $this->defineFields($this->source);
@@ -185,21 +185,54 @@ class specimensearchActions extends DarwinActions
   }
 
   /**
-  * Load related things for the specimens (code )
+  * Load related things for the specimens (code, loans related)
   */
   protected function loadRelated()
   {
+    // Fill in the specimens list that will be given for codes and loans retrieving
     $spec_list = array();
     foreach($this->specimensearch as $key=>$specimen){
       $spec_list[] = $specimen->getId() ;
     }
 
+    // codes retrieve and fill of a $this->codes variable (available in the specimen search result template)
     $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedMultiple('specimens',$spec_list) ;
     $this->codes = array();
     foreach($codes_collection as $code) {
       if(! isset($this->codes[$code->getRecordId()]))
         $this->codes[$code->getRecordId()] = array();
       $this->codes[$code->getRecordId()][] = $code;
+    }
+
+    // loans retrieve and fill of a $this->loans variable (available in the the specimen search result template)
+    $loans_collection = Doctrine::getTable('Loans')->getLoansRelatedArray($this->getUser(), $spec_list);
+    $this->loans = array();
+    foreach($loans_collection as $loan) {
+      $loan['loans_count'] = (int) $loan['loans_count'];
+      if ($loan['loans_count'] > 1) {
+        $loan_refs = preg_split('/\n/', $loan[ 'loans_ref' ]);
+        $loan_names = preg_split('/\n/', $loan[ 'loans_name' ]);
+        $loan_status = preg_split('/\n/', $loan[ 'loans_status' ]);
+        $loan_status_tooltip = preg_split('/\n/', $loan[ 'loans_status_tooltip' ]);
+        $loan_status_class = preg_split('/\n/', $loan[ 'loans_status_class' ]);
+        $loan_right = preg_split('/\n/', $loan[ 'loans_right' ]);
+        $loan[ 'specimen_infos' ] = array ();
+        foreach ($loan_refs as $key => $value) {
+          $loan[ 'specimen_infos' ][ $key ][ 'id' ] = $value;
+          $loan[ 'specimen_infos' ][ $key ][ 'name' ] = $loan_names[ $key ];
+          $loan[ 'specimen_infos' ][ $key ][ 'status' ] = $loan_status[ $key ];
+          $loan[ 'specimen_infos' ][ $key ][ 'status_tooltip' ] = $loan_status_tooltip[ $key ];
+          $loan[ 'specimen_infos' ][ $key ][ 'status_class' ] = $loan_status_class[ $key ];
+          $loan[ 'specimen_infos' ][ $key ][ 'access_right' ] = (int) $loan_right[ $key ];
+        }
+      }
+      elseif ($loan['loans_count'] === 1) {
+        $loan['loans_right'] = (int) $loan['loans_right'];
+      }
+      if(! isset($this->loans[$loan['specimen_id']])) {
+        $this->loans[ $loan['specimen_id'] ] = array ();
+      }
+      $this->loans[$loan['specimen_id']][] = $loan;
     }
   }
 
@@ -216,7 +249,7 @@ class specimensearchActions extends DarwinActions
     $flds = array('category','collection','taxon','type','gtu','codes','chrono','ig','acquisition_category',
               'litho','lithologic','mineral','expedition','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part', 'object_name', 'part_status', 'building', 'floor', 'room', 'row', 'col' ,'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
-              'sub_container_type' , 'sub_container_storage', 'specimen_count','part_codes');
+              'sub_container_type' , 'sub_container_storage', 'specimen_count','part_codes', 'loans');
 
 
     $flds = array_fill_keys($flds, 'uncheck');
@@ -389,6 +422,9 @@ class specimensearchActions extends DarwinActions
         'specimen_count' => array(
           'specimen_count_max',
           $this->getI18N()->__('Specimen Count'),),
+        'loans' => array(
+          false,
+          $this->getI18N()->__('Loans'),),
         ));
       }
   }

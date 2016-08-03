@@ -6,17 +6,18 @@ class SpecimensTable extends DarwinTable
 {
   static public $acquisition_category = array(
       'undefined' => 'Undefined',
+      'collect' => 'Collect',
       'donation' => 'Donation',
+      'excavation' => 'Excavation',
       'exchange' => 'Exchange',
+      'exploration' => 'Exploration',
+      'gift' => 'Gift',
       'internal work' => 'Internal work',
+      'seizure' => 'Judicial seizure',
       'loan' => 'Loan',
       'mission' => 'Mission',
       'purchase' => 'Purchase',
-      'seizure' => 'Judicial seizure',
       'trip' => 'Trip',
-      'excavation' => 'Excavation',
-      'exploration' => 'Exploration',
-      'collect' => 'Collect',
       );
 
   protected static $widget_array = array(
@@ -436,4 +437,34 @@ class SpecimensTable extends DarwinTable
 
     return $res;
   }
+
+  /**
+   * @param integer $id Id of family to use as top family
+   * @return array A recordset of the list of specimens that are of the family
+   *               provided
+   */
+  public function getFamilyContent($id) {
+    $sql="
+            select collection_name, id, taxon_name
+            from specimens
+            where taxon_ref in
+            (
+              select id
+              from taxonomy
+              where id = ?
+                 or path like '%/'||?::text||'/%'
+            )
+            and collection_ref not in (176,316)
+            order by collection_name, taxon_name, id
+         ";
+    $sql_params = array($id,$id);
+    $conn_MGR = Doctrine_Manager::connection();
+    $conn = $conn_MGR->getDbh();
+    $statement = $conn->prepare($sql);
+    $statement->execute($sql_params);
+    $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $res;
+  }
+
 }
