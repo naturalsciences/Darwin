@@ -506,15 +506,23 @@ abstract class BaseSpecimens extends DarwinModel
              ));
         $this->hasColumn('gtu_from_date_mask', 'integer', null, array(
              'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              ));
         $this->hasColumn('gtu_from_date', 'string', null, array(
              'type' => 'string',
+             'notnull' => true,
+             'default' => '0001-01-01',
              ));
         $this->hasColumn('gtu_to_date_mask', 'integer', null, array(
              'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              ));
         $this->hasColumn('gtu_to_date', 'string', null, array(
              'type' => 'string',
+             'notnull' => true,
+             'default' => '2038-12-31',
              ));
         $this->hasColumn('gtu_tag_values_indexed', 'string', null, array(
              'type' => 'string',

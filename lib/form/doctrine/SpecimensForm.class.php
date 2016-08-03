@@ -36,6 +36,8 @@ class SpecimensForm extends BaseSpecimensForm
     $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('dw_dateLowerBound'));
+    //ftheeten 2016 07 07
+    $dateUpperBound = new FuzzyDateTime(sfConfig::get('dw_dateUpperBound'));
     $maxDate->setStart(false);
 
     /* Define name format */
@@ -167,6 +169,32 @@ class SpecimensForm extends BaseSpecimensForm
       ),
       array('class' => 'to_date')
     );
+    
+    //ftheeten 2016 07 07 group date
+    
+    $this->widgetSchema['gtu_from_date'] = new widgetFormJQueryFuzzyDate(array(
+      'culture'=>$this->getCurrentCulture(),
+      'image'=>'/images/calendar.gif',
+      'format' => '%day%/%month%/%year%',
+      'years' => $years,
+      'empty_values' => $dateText,
+      'with_time' => true
+      ),
+      array('class' => 'from_date')
+    );
+
+    $this->widgetSchema['gtu_to_date'] = new widgetFormJQueryFuzzyDate(array(
+      'culture'=>$this->getCurrentCulture(),
+      'image'=>'/images/calendar.gif',
+      'format' => '%day%/%month%/%year%',
+      'years' => $years,
+      'empty_values' => $dateText,
+      'with_time' => true
+      ),
+      array('class' => 'to_date')
+    );
+    
+    //end group date
 
     $this->widgetSchema['relationship'] = new sfWidgetFormInputHidden(array('default'=>1));
     $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
@@ -441,6 +469,42 @@ class SpecimensForm extends BaseSpecimensForm
       array('invalid' => 'Date provided is not valid',
     ));
 
+    
+    //ftheeten 2016 07 07 group date
+    $this->validatorSchema['gtu_from_date'] = new fuzzyDateValidator(array(
+      'required' => false,
+      'from_date' => true,
+      'min' => $minDate,
+      'max' => $maxDate,
+      'empty_value' => $dateLowerBound,
+      'with_time' => true
+      ),
+      array('invalid' => 'Date provided is not valid',)
+    );
+
+    $this->validatorSchema['gtu_to_date'] = new fuzzyDateValidator(array(
+      'required' => false,
+      'from_date' => false,
+      'min' => $minDate,
+      'max' => $maxDate,
+      'empty_value' => $dateUpperBound,
+      'with_time' => true
+      ),
+      array('invalid' => 'Date provided is not valid',)
+    );
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorAnd(array(
+        new sfValidatorSchemaCompare(
+          'gtu_from_date',
+          '<=',
+          'gtu_to_date',
+          array('throw_global_error' => true),
+          array('invalid'=>'The "begin" date cannot be above the "end" date.')
+        )
+      )
+    ));
+
+    //end group date
 
     $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'Codes',
@@ -616,6 +680,11 @@ class SpecimensForm extends BaseSpecimensForm
       'Stage' => array('stage'),
       'Social' => array('social_status'),
       'Rock' => array('rock_form'),
+      //ftheeten 2016 07 07
+      'GtuDate' => array(
+        'gtu_from_date',
+        'gtu_from_to',
+      ),
     );
   }
 

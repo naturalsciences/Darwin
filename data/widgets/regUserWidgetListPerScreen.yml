@@ -372,6 +372,18 @@ sps27:
    visible: true
    title_perso: Specimen Status / Count
    all_public: true
+   
+#ftheeten 2016 07 07   
+sps28:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: gtuDate
+   mandatory: false
+   order_by: 15
+   opened: false
+   visible: false
+   title_perso: Gathering date
+   all_public: true    
 
 sw1:
    col_num: 1
@@ -683,6 +695,18 @@ sw33:
    title_perso: Historic
    all_public: true
 
+#ftheeten 2016 07 07
+sw34:
+   col_num: 1
+   category: specimen_widget
+   group_name: gtuDate
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Gathering date
+   all_public: true   
+   
 
 tw1:
    col_num: 1

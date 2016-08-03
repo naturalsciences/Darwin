@@ -290,4 +290,10 @@ class specimenwidgetComponents extends sfComponents
       $this->rights = Doctrine::getTable('loanRights')->getEncodingRightsForUser($this->getUser()->getId());
     }
   }
+  
+  //ftheeten 2016 07 07
+  public function executeGtuDate()
+  {
+    $this->defineForm();
+  }
 }

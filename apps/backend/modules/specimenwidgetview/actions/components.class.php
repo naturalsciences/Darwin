@@ -227,4 +227,10 @@ class specimenwidgetviewComponents extends sfComponents
   {
     $this->defineObject();
   }
+  
+   //ftheeten 2016 07 07  
+   public function executeGtuDate()
+  {
+    $this->defineObject();
+  }
 }

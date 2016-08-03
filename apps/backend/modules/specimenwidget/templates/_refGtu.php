@@ -44,6 +44,9 @@
       </th>
       <td>
         <?php echo $form['gtu_ref']->render() ?>
+        <div class="check_right form_buttons">
+          <?php echo link_to(__('View'), url_for("gtu/edit?id=".$form['gtu_ref']->getValue()), array('target' => '_new')) ; ?>
+        </div>
       </td>
     </tr>
     <tr>
@@ -60,11 +63,14 @@ $(document).ready(function () {
       el_name = $("#specimen_gtu_ref_name .code");
       if(el_name.length)
       {
-        var url = '#';
-        if ( $('#specimen_gtu_ref').val() != '' ) {
-          url = $("a#gtu_goto_link").attr('href')+'/id/'+$('#specimen_gtu_ref').val();
-        }
-        $("#specimen_gtu_ref_code").html("<a href=\""+url+"\" target=\"_new\">"+$("#specimen_gtu_ref_name .code").html()+"</a>");
+		//ftheeten 2016 03 15
+		 <?php if($sf_user->isAtLeast(Users::ENCODER)):?>
+          <?php echo "$('#specimen_gtu_ref_code').html('".link_to(__('View'), 'gtu/edit?id='.$form['gtu_ref']->getValue(), array('class'=>'view_loc_code', 'target'=>'_blank'))."');"; ?>
+		   <?php echo '$(".view_loc_code").text($("#specimen_gtu_ref_name .code").text());';?>
+        <?php else:?>
+          <?php echo '$("#specimen_gtu_ref_code").html($("#specimen_gtu_ref_name .code").html());';?>
+        <?php endif;?>
+        //$("#specimen_gtu_ref_code").html($("#specimen_gtu_ref_name .code").html());
         $("#specimen_gtu_ref_map").html($("#specimen_gtu_ref_name .img").html());
         $("#specimen_gtu_ref_lat").html($("#specimen_gtu_ref_name .lat").html());
         $("#specimen_gtu_ref_lon").html($("#specimen_gtu_ref_name .lon").html());

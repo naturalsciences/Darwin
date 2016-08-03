@@ -40,6 +40,78 @@ class Specimens extends BaseSpecimens
       }
     }
   }
+  
+   //ftheeten group date 2016 07 07
+    public function getGtuFromDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('gtu_from_date'), $this->_get('gtu_from_date_mask'),true, true);
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getGtuToDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('gtu_to_date'), $this->_get('gtu_to_date_mask'),false, true);
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getGtuFromDate()
+  {
+    $from_date = new FuzzyDateTime($this->_get('gtu_from_date'), $this->_get('gtu_from_date_mask'),true,true);
+    return $from_date->getDateTimeMaskedAsArray();
+  }
+
+  public function getGtuToDate()
+  {
+    $to_date = new FuzzyDateTime($this->_get('gtu_to_date'), $this->_get('gtu_to_date_mask'), false,true);
+    return $to_date->getDateTimeMaskedAsArray();
+  }
+
+  public function setGtuFromDate($fd)
+  {
+    if ($fd instanceof FuzzyDateTime)
+    {
+      $this->_set('gtu_from_date', $fd->format('Y/m/d H:i:s'));
+      $this->_set('gtu_from_date_mask', $fd->getMask());
+    }
+    else
+    {
+      $dateTime = new FuzzyDateTime($fd, 56, true,true);
+      if(is_array($fd))
+        $dateTime->setMask(FuzzyDateTime::getMaskFromDate($fd));
+      $this->_set('gtu_from_date', $dateTime->format('Y/m/d H:i:s'));
+      $this->_set('gtu_from_date_mask', $dateTime->getMask());
+    }
+  }
+
+  public function setGtuToDate($fd)
+  {
+    if ($fd instanceof FuzzyDateTime)
+    {
+      $this->_set('gtu_to_date', $fd->format('Y/m/d H:i:s'));
+      $this->_set('gtu_to_date_mask', $fd->getMask());
+    }
+    else
+    {
+      $dateTime = new FuzzyDateTime($fd, 56, false,true);
+      if(is_array($fd))
+        $dateTime->setMask(FuzzyDateTime::getMaskFromDate($fd));
+      $this->_set('gtu_to_date', $dateTime->format('Y/m/d H:i:s'));
+      $this->_set('gtu_to_date_mask', $dateTime->getMask());
+    }
+  }
+  
+  public function getRawGtuToDate()
+  {
+    return $this->_get('gtu_to_date');
+  }
+  
+    public function getRawGtuFromDate()
+  {
+    return $this->_get('gtu_from_date');
+  }
+
+// end group date  
+    
 
   public function setHostRelationship($value)
   {

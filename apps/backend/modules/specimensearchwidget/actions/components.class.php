@@ -160,4 +160,10 @@ class specimensearchwidgetComponents extends sfComponents
   {
     $this->defineForm() ;
   }
+  
+   //ftheeten 2016 07 08 
+   public function executeGtuDate()
+  {
+    $this->defineForm();
+  }
 }
